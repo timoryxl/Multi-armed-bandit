@@ -1,4 +1,4 @@
-# Sta532-FinalProject
+# Sta531-FinalProject
 
 Ilan Man ilan.man@gmail.com
 
