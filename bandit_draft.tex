@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{blindtext}
+\usepackage[margin=0.75in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{stackengine}
+\usepackage[pdftex]{graphicx}
+\usepackage{float}
+\usepackage{newlfont}
+\usepackage{amssymb}
+\usepackage{verbatim} 
+\usepackage[final]{pdfpages}
+\usepackage{setspace}
+\setlength{\parindent}{15pt}
+
+\title{Multi-Armed Bandit Problem}
+\author{Sunith Suresh, Lin Xiao, Ilan Man and Sanjay Hariharan}
+\date{\today} 
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\section{Multi-armed bandit review}
+
+\begin{itemize}
+\item define problem: policy, machines, objective, regret
+\item  exploitation vs exploration
+\item  examples of applications
+\end{itemize}
+
+\subsection{$\epsilon$-greedy}
+
+\begin{itemize}
+\item  basic algorithm
+\item  linear regret
+\end{itemize}
+
+\subsection{upper confidence bounds}
+
+\begin{itemize}
+\item  explain concept of bounding regret
+\item  application of Hoeffding's Inequality
+\item  calculate UCB
+\end{itemize}
+
+\section{Bayesian approach}
+
+\begin{itemize}
+\item define rewards as bernoulli($\pi_i$)
+\item select machine with probability $\theta_i$
+\item update belief of machine
+\item goal is to maximize expecte reward
+\end{itemize}
+
+\subsection{Thompson Sampling: Hueristic}
+
+- Lin
+
+\subsection{Analytical theory}
+
+- Sanjay/Lin
+
+\subsection{Dynamic programming and Gittins}
+
+- Sunith
+
+
+\section{Empirical Comparisons}
+
+\subsection{Data set}
+
+\section{Conclusion}
+
+\section{References}
+
+
+\end{document}
