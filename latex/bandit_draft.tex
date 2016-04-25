@@ -11,7 +11,7 @@
 \usepackage{verbatim} 
 \usepackage[final]{pdfpages}
 \usepackage{setspace}
-\setlength{\parindent}{15pt}
+\setlength{\parindent}{0pt}
 
 \title{Multi-Armed Bandit Problem}
 \author{Sunith Suresh, Lin Xiao, Ilan Man and Sanjay Hariharan}
@@ -23,11 +23,38 @@
 
 \section{Multi-armed bandit review}
 
-\begin{itemize}
-\item define problem: policy, machines, objective, regret
-\item  exploitation vs exploration
-\item  examples of applications
-\end{itemize}
+
+
+\subsection{Problem setup: Bernoulli Bandit}
+
+We formulate a simple bandit scheme involving 2 Machines and a Bernoulli Reward (0 or 1). We play one of the two machines at every iteration of the game for N iterations. Each Machine has a latent parameter governing its reward. At every step we draw a reward from the selected machine. Typically the objective is to maximize the expected total rewards. As such, the goal of the multi-armed bandit problem is to devise a scheme by which one can select the optimal machine to play at each time step.\\
+
+A related and important concept to reward maximization is the concept of minimizing regret. Define $R_{N}^{*}$ and $\hat{R_{N}}$ as the actual and expected maximum rewards, respectively, after N iterations. Therefore the regret of a given multi-armed bandit scheme is $R_{N}^{*} - \hat{R_{N}}$.\\
+
+We designate the following:
+
+$$\theta_1 \sim \text{Beta}(\alpha_1, \beta_1)$$
+$$\theta_2 \sim \text{Beta}(\alpha_2, \beta_2)$$
+$$R_1 = \text{Reward from Machine 1} \sim \text{Bernoulli}(\theta_1)$$
+$$R_2 = \text{Reward from Machine 2} \sim \text{Bernoulli}(\theta_2)$$
+
+
+In the beginning, we have no prior knowledge about either Machine, or more specifically, about the latent parameter governing each Machine. Therefore, we initially set $\alpha_1, \alpha_2, \beta_1, \beta_2 = 1$
+
+\subsubsection{Acquisition function}
+
+In order to maximize expected rewards, we define the acquisition function $U(\theta | X) = U(\alpha_1, \beta_1, \alpha_2, \beta_2 | X)$ which is the function that determines how we choose the next machine to play. This function balances the trade off between selecting the best machine based on previous plays, and the possibility of a better machine that hasn't been select yet. This trade off is known as the exploration/exploitation dilemma.\\
+
+As we begin playing and gathering information, we continuously update our parameters of interest based on the outcome. Specifically:
+
+\begin{enumerate}
+\item U($\alpha_1$,$\beta_1$,$\alpha_2$, $\beta_2$)=j  ( We choose Machine j )
+\item $R_j$=i  ( We play Machine j, and get Reward i )
+\item If $R_j = 1: \alpha_1 = \alpha_1 + 1$
+\item If $R_j = 0: \beta_1 = \beta_1 + 1$
+\end{enumerate}
+The idea is to update our prior belief on the success of the individual Machines based on our empirical rewards. $\alpha_i$ represents success, while $\beta_i$ represents failure
+
 
 \subsection{$\epsilon$-greedy}
 
