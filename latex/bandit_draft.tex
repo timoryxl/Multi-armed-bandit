@@ -23,33 +23,55 @@
 
 \section{Multi-armed bandit review}
 
-Intro the MAB problem.
+In Machine Learning literature, the stochastic multi-armed bandit is defined as: 
 
-Typically the objective is to maximize the expected total rewards. As such, the goal of the multi-armed bandit problem is to devise a scheme by which one can select the optimal machine to play at each time step.\\
+\begin{quote}
+Given $K$ machines, each with an unknown probability of yielding a reward, which come from a fixed but unknown distribution parameterized by $\theta_i$, for $i \in (1, ..., K)$, and $N$ total plays, decide which machines to play in order to maximize the total reward or minimize the regret.
+\end{quote}
 
-A related and important concept to reward maximization is the concept of minimizing regret. Define $R_{N}^{*}$ and $\hat{R_{N}}$ as the actual and expected maximum rewards, respectively, after N iterations. Therefore the regret of a given multi-armed bandit scheme is $R_{N}^{*} - \hat{R_{N}}$.\\
+Define $R_{N}^{*}$ and $\hat{R_{N}}$ as the actual and expected maximum rewards, respectively, after $N$ plays. Therefore the regret of a given multi-armed bandit algorithm is $R_{N}^{*} - \hat{R_{N}}$. Note that since this is a stochastic problem, we aim to minimize regret in expectation or with high probability.\\
 
-The following sections outline various approaches to solving the MAB problem.
+This paper presents various approaches at minimizing the total regret. Specifically, we compare heuristic approaches to theoretically optimal approaches.\\
+
+The common theme between the algorithms outlined in this paper are that our objective is to select the optimal machine to play at each time step, given that we want to maximize future rewards. The approach to selecting which machine to play is known as the \textit{policy} or acquisition function, denoted as $U(\alpha_i, \beta_i)$. This function balances the trade off between selecting the best machine based on previous plays and the possibility of a better machine that hasn't been selected yet. This trade off is the \textit{exploration/exploitation} dilemma.\\
+
 
 \subsection{$\epsilon$-greedy}
 
 - Sunith
 
-\subsection{upper confidence bounds}
+\subsection{Upper Confidence Bounds}
 
-- Ilan
+The upper confidence bound (UCB) family of algorithms simply selects the machine with the largest upper confidence bound at each round.  The intuition is this: the more times you play a machine, the tighter the confidence bounds. So, as the number of plays for each machine increases, the uncertainty decreases, and so does the width of the confidence bound.\\
 
-\begin{itemize}
-\item  explain concept of bounding regret
-\item  application of Hoeffding's Inequality
-\item  calculate UCB
-\end{itemize}
+We want to know with high probability that the true expected payoff of a play $\mu_i$ is less than our prescribed upper bound.\\
 
-\section{Bayesian approach}
+The key ingredient here is using Chernoff-Heofding Bounds to find the upper bound:
+
+$$\displaystyle \textup{P}(Y + a < \mu) \leq e^{-2na^2}$$
+
+Assuming $K$ machines:
+
+\begin{enumerate}
+\item Play each arm once
+\item At any time t $\ge$ $K$, play machine $i_t$ maximizing:
+	\begin{enumerate}
+		\item $\bar{x_{i}}(t) + \sqrt{\frac{2 ln (t)}{T_{i,t}}}$
+		\item Over $i \in {1,...N}$ 
+	\end{enumerate}
+\end{enumerate}
+
+Where $\bar{x_{i}}(t)$ is the average reward obtained from machine j and $T_{i,t}$ is the number of times machine $i$ has been played so far.\\
+
+From out analysis of the Chernoff-Hoeffing bound above we can see that the confidence bound grows with the total number of actions we have taken but shrinks with the number of times we have tried this particular action. This ensures each andction is tried infinitely often but still balances exploration and exploitation.\\
+
+The regret for UCB1 grows at a rate of ln n.\\
+
+\section{Bayesian approaches}
 
 \subsection{Bernoulli Bandit}
 
-We formulate a simple bandit scheme involving $N$ Machines and a Bernoulli Reward (0 or 1). We play one of the N machines at every iteration of the game for T iterations. Each Machine has a latent parameter governing its reward. At every step we draw a reward from the selected machine.\\
+We formulate a simple bandit scheme involving $K$ Machines and a Bernoulli Reward (0 or 1). We play one of the N machines at every iteration of the game for T iterations. Each Machine has a latent parameter governing its reward. At every step we draw a reward from the selected machine.\\
 
 Specifically, for each machine, we generate a probability of getting a reward of 1, $\theta_i$. We assume that $\theta_i$ is distributed as a Beta. A natural choice for the likelihood of a reward, $r_i$ is a $\text{Bernoulli}(\theta_i)$. To be clear:
 
@@ -68,7 +90,7 @@ Before beginning to play, we have no prior knowledge about either Machine's prop
 The generic algorithm is as follows:
 
 \begin{enumerate}
-\item For t = 1, ..., T
+\item For $t = 1, ..., N$
 \item U($\alpha_i$, $\beta_i$) = $i_t$  // select machine $i$ at time $t$ using the policy/acquisition function
 \item $r_t \sim \text{Bernoulli}(\theta_{i})$  i  // We play Machine $i$, and get Reward $r_t$
 \item If $r_t = 1: \alpha_i = \alpha_i + 1$   // if the reward was successful, increase our positive belief in machine $i$
@@ -78,39 +100,27 @@ The generic algorithm is as follows:
 
 This algorithm provides a framework for how to think about this problem in a general way. To maximize expected rewards, we must optimally choose the acquisition function U. The remaning sections discuss the acquisition function.
 
-\subsubsection{Acquisition function}
-
-In order to maximize expected rewards, we define the acquisition function $U(\alpha_i, \beta_i)$ which is the function that determines how we choose the next machine to play. This is also known as the \textit{policy}. This function balances the trade off between selecting the best machine based on previous plays, and the possibility of a better machine that hasn't been selected yet. This trade off is the exploration/exploitation dilemma mentioned ealier.\\
-
 \subsection{Backwards algorithm}
 
-- Sanjay/Sunith\\
-- (IM - this seems like a another way to say {"make the acquisition function/policy just be greedy at every step"})\\
-  - if so, then I can write this out
-  - if there is more to it, then go ahead and fill this section out
+- Sanjay
 
 \subsection{Thompson Sampling: Hueristic approach}
 
-- Lin\\
-- basic idea of Thompson sampling (i.e. sample in proportion to both machines)\\
-- talk about how it balances exploration v exploitation because it samples and doesn't just use expected maximum reward at each step (like algorithm above)
+- natural bayesian heuristic
+- ucb has strong theoreticcal guarantees, but thompson has been shown to be more effective
+- 
 
 \subsection{Analytical theory}
 
-- Sanjay/Lin\\
-- no code, just formulas and explanation
+- Sanjay/Lin
 
 \subsection{Dynamic programming and Gittins}
 
 - Sunith
-\begin{itemize}
-\item write out algorithm (code optional)
-\item explain gittins index and why its optimal
-\end{itemize}
 
 \subsection{Gaussian Process and Reinforcement Learning}
 
-- Sanjay
+- Lin
 \begin{itemize}
 \item assume knowledge of GPs, so no need to explain what a GP is
 \item quick overview of how MAB relates to reinforcement learning
