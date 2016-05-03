@@ -21,6 +21,16 @@
 
 \section{Introduction}
 
+The Multi-Armed Bandit Problem:
+
+\begin{quote}
+Suppose you are faced with NN slot machines (colourfully called multi-armed bandits). Each bandit has an unknown probability of distributing a prize (assume for now the prizes are the same for each bandit, only the probabilities differ). Some bandits are very generous, others not so much. Of course, you don't know what these probabilities are. By only choosing one bandit per round, our task is devise a strategy to maximize our winnings.
+\end{quote}
+
+The task is complicated by the stochastic nature of the bandits. A suboptimal bandit can return many winnings, purely by chance, which would make us believe that it is a very profitable bandit. Similarly, the best bandit can return many duds. Should we keep trying losers then, or give up?
+
+A more troublesome problem is, if we have a found a bandit that returns pretty good results, do we keep drawing from it to maintain our pretty good score, or do we try other bandits in hopes of finding an even-better bandit? This is the exploration vs. exploitation dilemma.
+
 \section{Multi-armed bandit review}
 
 In Machine Learning literature, the stochastic multi-armed bandit is defined as: 
@@ -100,23 +110,15 @@ The generic algorithm is as follows:
 
 This algorithm provides a framework for how to think about this problem in a general way. To maximize expected rewards, we must optimally choose the acquisition function U. The remaning sections discuss the acquisition function.
 
-\subsection{Backwards algorithm}
+\subsection{Dynamic Programming}
 
 - Sanjay
 
 \subsection{Thompson Sampling: Hueristic approach}
 
-- natural bayesian heuristic
-- ucb has strong theoreticcal guarantees, but thompson has been shown to be more effective
-- 
+ The UCB algorithms are implicitly using a probability distribution, but only one number from it: the upper confidence bound.  In Bayesian thinking, we want to use the entire probability distribution.  In the preceding post I defined pa(r)pa(r) , the probability distribution from which rewards are drawn.  That's what controls the bandit.  It would be great if we could estimate this entire distribution, but we don't need to.  Why?  Because all we care about is its mean μaμa .  What we will do is encode our uncertainty of μaμa in the probability distribution p(μa|dataa)p(μa|dataa) , and then use that probability distribution to decide when to explore and when to exploit.
 
-\subsection{Analytical theory}
 
-- Sanjay/Lin
-
-\subsection{Dynamic programming and Gittins}
-
-- Sunith
 
 \subsection{Gaussian Process and Reinforcement Learning}
 
