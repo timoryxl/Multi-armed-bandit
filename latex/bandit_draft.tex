@@ -56,24 +56,32 @@ The upper confidence bound (UCB) family of algorithms simply selects the machine
 
 We want to know with high probability that the true expected payoff of a play $\mu_i$ is less than our prescribed upper bound.\\
 
-The key ingredient here is using Chernoff-Heofding Bounds to find the upper bound:
+The key ingredient here is using Chernoff-Hoeffding Bounds to find the upper bound:
 
 $$\displaystyle \textup{P}(Y + a < \mu) \leq e^{-2na^2}$$
+
+UCB1 index-based policy created by the sum of two terms, where the first term is the average reward and the second term is related to the one-sided confidence interval for the average reward according to the Chernoff-Hoeffding bounds, which provides an upper bound on the probability that the sum of random variables deviates from its expected value.\\
 
 Assuming $K$ machines:
 
 \begin{enumerate}
 \item Play each arm once
-\item At any time t $\ge$ $K$, play machine $i_t$ maximizing:
+\item Observe rewards $r_i$, for $i = 1, ..., K$
+\item Set $n_i = 1$, for $i = 1, ..., K$
+\item set $\bar{\mu_{i}} = \frac{r_i}{n_i}$
+\item For time $t = K+1, ..., N$:
 	\begin{enumerate}
-		\item $\bar{x_{i}}(t) + \sqrt{\frac{2 ln (t)}{T_{i,t}}}$
-		\item Over $i \in {1,...N}$ 
+		\item Play arm $\hat{i} = \underset{i}{argmax}(\hat{\mu_{i}} + \sqrt{\frac{2 ln (t)}{n_i}})$
+		\item Observe reward $r$
+		\item $r_{\hat{i}} = r_{\hat{i}} + r$
+		\item $n_{\hat{i}} = n_{\hat{i}} + 1$
+		\item update $\hat{\mu_{i}} = \frac{r_{\hat{i}}}{n_{\hat{i}}}$
 	\end{enumerate}
 \end{enumerate}
 
-Where $\bar{x_{i}}(t)$ is the average reward obtained from machine j and $T_{i,t}$ is the number of times machine $i$ has been played so far.\\
+Where $\hat{\mu_{i}}$ is the average reward obtained from machine $i$ and $n_i$ is the number of times machine $i$ has been played so far.\\
 
-From out analysis of the Chernoff-Hoeffing bound above we can see that the confidence bound grows with the total number of actions we have taken but shrinks with the number of times we have tried this particular action. This ensures each andction is tried infinitely often but still balances exploration and exploitation.\\
+From our analysis of the Chernoff-Hoeffing bound above we can see that the confidence bound grows with the total number of actions we have taken but shrinks with the number of times we have tried this particular action. This ensures each action is tried infinitely often but still balances exploration and exploitation.\\
 
 The regret for UCB1 grows at a rate of ln n.\\
 
@@ -95,7 +103,7 @@ where $R_{T} = \sum_{t=1}^{T}r_{t}$
 
 Before beginning to play, we have no prior knowledge about either Machine's propensity to yield a positive reward. Therefore, we initially set $\alpha_i, \beta_i = 1$, which is a common objective prior for the Beta distribution.\\
 
-\subsection{General algorithm}
+\subsection{Thompson Sampling: Hueristic approach}
 
 The generic algorithm is as follows:
 
@@ -108,15 +116,9 @@ The generic algorithm is as follows:
 \item $R_t = R_t + r_t$		// add reward at time $t$ to running total
 \end{enumerate}
 
-This algorithm provides a framework for how to think about this problem in a general way. To maximize expected rewards, we must optimally choose the acquisition function U. The remaning sections discuss the acquisition function.
+This algorithm provides a framework for how to think about this problem in a general way. To maximize expected rewards, we must optimally choose the acquisition function U.
 
-\subsection{Dynamic Programming}
-
-- Sanjay
-
-\subsection{Thompson Sampling: Hueristic approach}
-
- The UCB algorithms are implicitly using a probability distribution, but only one number from it: the upper confidence bound.  In Bayesian thinking, we want to use the entire probability distribution.  In the preceding post I defined pa(r)pa(r) , the probability distribution from which rewards are drawn.  That's what controls the bandit.  It would be great if we could estimate this entire distribution, but we don't need to.  Why?  Because all we care about is its mean μaμa .  What we will do is encode our uncertainty of μaμa in the probability distribution p(μa|dataa)p(μa|dataa) , and then use that probability distribution to decide when to explore and when to exploit.
+Note that we don't real care how accurate we become about inference of the hidden probabilities -- for this problem we are more interested in choosing the best bandit (or more accurately, becoming more confident in choosing the best bandit).
 
 
 
