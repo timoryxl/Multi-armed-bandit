@@ -21,30 +21,30 @@
 
 \section{Introduction}
 
-The Multi-Armed Bandit Problem:
+This paper explores the multi-armed bandit problem (MAB). A multi-armed bandit is a sequential experiment with the goal of achieving the largest possible reward from a payoff distribution with unknown parameters. The term multi-armed bandit comes from slot machines where each machine is known as a one-armed bandit. In this set up, at each iteration the player must decide which arm of the experiment to observe next.\\
 
-\begin{quote}
-Suppose you are faced with NN slot machines (colourfully called multi-armed bandits). Each bandit has an unknown probability of distributing a prize (assume for now the prizes are the same for each bandit, only the probabilities differ). Some bandits are very generous, others not so much. Of course, you don't know what these probabilities are. By only choosing one bandit per round, our task is devise a strategy to maximize our winnings.
-\end{quote}
+The task is complicated by the stochastic nature of the bandits in the following two ways:
 
-The task is complicated by the stochastic nature of the bandits. A suboptimal bandit can return many winnings, purely by chance, which would make us believe that it is a very profitable bandit. Similarly, the best bandit can return many duds. Should we keep trying losers then, or give up?
+\begin{enumerate}
+\item A suboptimal bandit can return many winnings, purely by chance, which would make us believe that it is a very profitable bandit. Similarly, the best bandit might not yield a reward if only played a few times.
+\item If we have a found a bandit that returns pretty good results, do we keep drawing from it to maintain our pretty good score, or do we try other bandits in hopes of finding an even-better bandit? How do we know when to switch and when to stick to the current bandit? This is the \textit{exploration vs. exploitation} dilemma.
+\end{enumerate}
 
-A more troublesome problem is, if we have a found a bandit that returns pretty good results, do we keep drawing from it to maintain our pretty good score, or do we try other bandits in hopes of finding an even-better bandit? This is the exploration vs. exploitation dilemma.
+This algorithm is popular in machine learning literature as an example of reinforcement learning, as well as game theory as an example of optimal decision making in the face of multiple choices.\\
+
+This paper reviews several strategies for selecting machines, including a novel (to our knowledge) approach using dynamic programming, and compares each approach against each other. Note that there are variations on the stochastic MAB, including contextual bandit and adverserial bandit, which we will not discuss here.
 
 \section{Multi-armed bandit review}
 
-In Machine Learning literature, the stochastic multi-armed bandit is defined as: 
+In Machine Learning literature, the stochastic multi-armed bandit problem is formulated as:
 
 \begin{quote}
-Given $K$ machines, each with an unknown probability of yielding a reward, which come from a fixed but unknown distribution parameterized by $\theta_i$, for $i \in (1, ..., K)$, and $N$ total plays, decide which machines to play in order to maximize the total reward or minimize the regret.
+Given $K$ machines, each with an unknown probability of yielding a reward, which come from a fixed but unknown distribution parameterized by $\theta_i$, for $i \in (1, ..., K)$, and $N$ total plays, decide which machines to play in order to maximize the total reward.
 \end{quote}
 
-Define $R_{N}^{*}$ and $\hat{R_{N}}$ as the actual and expected maximum rewards, respectively, after $N$ plays. Therefore the regret of a given multi-armed bandit algorithm is $R_{N}^{*} - \hat{R_{N}}$. Note that since this is a stochastic problem, we aim to minimize regret in expectation or with high probability.\\
+It is common in the literature to express the maximum reward as minimzing \textit{regret} compared to the best arm in hindsight. That is, define regret at each step as $r_{t} = R^* - R_{i}$, where $R^*$ is the reward yielded by selecting the best machine and $R_{i}$ is the reward yielded by selecting machine $i$. The goal is then to devise a strategy to minimize $\sum_{t=1}^N r_{t}$. Note that since this is a stochastic problem, we aim to minimize regret in expectation or with high probability.\\
 
-This paper presents various approaches at minimizing the total regret. Specifically, we compare heuristic approaches to theoretically optimal approaches.\\
-
-The common theme between the algorithms outlined in this paper are that our objective is to select the optimal machine to play at each time step, given that we want to maximize future rewards. The approach to selecting which machine to play is known as the \textit{policy} or acquisition function, denoted as $U(\alpha_i, \beta_i)$. This function balances the trade off between selecting the best machine based on previous plays and the possibility of a better machine that hasn't been selected yet. This trade off is the \textit{exploration/exploitation} dilemma.\\
-
+The common theme between the algorithms outlined in this paper are that our objective is to select the optimal machine to play at each time step, given that we want to minimize cumulative regret. The approach to selecting which machine to play is known as the \textit{policy} or acquisition function, denoted as $U(\alpha_i, \beta_i)$. This function balances the trade off between selecting the best machine based on previous plays and the possibility of a better machine that hasn't been selected yet.
 
 \subsection{$\epsilon$-greedy}
 
@@ -52,15 +52,32 @@ The common theme between the algorithms outlined in this paper are that our obje
 
 \subsection{Upper Confidence Bounds}
 
-The upper confidence bound (UCB) family of algorithms simply selects the machine with the largest upper confidence bound at each round.  The intuition is this: the more times you play a machine, the tighter the confidence bounds. So, as the number of plays for each machine increases, the uncertainty decreases, and so does the width of the confidence bound.\\
+The other algorithms presented in this paper are similar in that they pay attention only to how much reward they’ve gotten from the machines. This means that they're likely to under-explore options whose initial experiences were not rewarding, even though they may not have enough data to be confident about those arms. One naive approach to solving this problem is to run the algorithm multiple times and take the average of the results. Another could be to run the algorithm for a very long time and hope the probabilistic nature will eventually correct for random variation in the reward distribution. Another approach is to use probability theory to bound our confidence in how good or bad each machine is. This is exactly what Upper Confidence Bounds does.\\
 
-We want to know with high probability that the true expected payoff of a play $\mu_i$ is less than our prescribed upper bound.\\
+The upper confidence bound (UCB) family of algorithms selects the machine with the largest upper confidence bound at each round. This paper will only focus on UCB1, but note that there are many variants of the UCB family. The more times you play a machine, the tighter the confidence bounds become. So as the number of plays for each machine increases, the uncertainty decreases, and so does the width of the confidence bound.\\
 
-The key ingredient here is using Chernoff-Hoeffding Bounds to find the upper bound:
+We want to know with high probability that the true expected payoff of a play $\hat{\mu_i}$ is less than our prescribed upper bound:
+
+$$\bar{\mu_{i}} + \sqrt{\frac{2 ln (t)}{n_i}}$$
+
+Where $\bar{\mu_{i}}$ is the average reward obtained from machine $i$ and $n_i$ is the number of times machine $i$ has been played so far.\\
+
+This upper bound is the sum of two terms, where:
+
+\begin{enumerate}
+\item the first term is the average reward
+\item the second term is related to the one-sided confidence interval for the average reward according to the Chernoff-Hoeffding bounds
+\end{enumerate}
+
+Recall that since rewards follow a Bernoulli distribution, we can apply Chernoff-Hoeffding to upper bound the probability that the sum of rewards from each machine deviates from its expected value:
 
 $$\displaystyle \textup{P}(Y + a < \mu) \leq e^{-2na^2}$$
 
-UCB1 index-based policy created by the sum of two terms, where the first term is the average reward and the second term is related to the one-sided confidence interval for the average reward according to the Chernoff-Hoeffding bounds, which provides an upper bound on the probability that the sum of random variables deviates from its expected value.\\
+This confidence bound grows with the total number of actions we have taken but shrinks with the number of times we have tried this particular action. This ensures each action is tried infinitely often but still balances exploration and exploitation. It can be shown that the regret for UCB1 grows with \textbf{ln n}, as witnessed below for the optimal machine.\\
+
+Note that in addition to keeping track of our confidence in the estimated values of each machine, the UCB algorithm doesn’t use randomness at all. Unlike the other algorithms in this paper (and in the literature) it’s possible to know exactly how UCB will behave in any given situation. This can make it easier to reason about at times.
+
+\subsubsection{UCB1: Algorithm}
 
 Assuming $K$ machines:
 
@@ -71,7 +88,7 @@ Assuming $K$ machines:
 \item set $\bar{\mu_{i}} = \frac{r_i}{n_i}$
 \item For time $t = K+1, ..., N$:
 	\begin{enumerate}
-		\item Play arm $\hat{i} = \underset{i}{argmax}(\hat{\mu_{i}} + \sqrt{\frac{2 ln (t)}{n_i}})$
+		\item Play arm $\hat{i} = \underset{i}{\text{argmax}}\text{ }(\hat{\mu_{i}} + \sqrt{\frac{2 ln (t)}{n_i}})$
 		\item Observe reward $r$
 		\item $r_{\hat{i}} = r_{\hat{i}} + r$
 		\item $n_{\hat{i}} = n_{\hat{i}} + 1$
@@ -79,33 +96,42 @@ Assuming $K$ machines:
 	\end{enumerate}
 \end{enumerate}
 
-Where $\hat{\mu_{i}}$ is the average reward obtained from machine $i$ and $n_i$ is the number of times machine $i$ has been played so far.\\
+Below we run UCB1 on 5 machines with true reward distribution, $[0.05,0.1,0.3,0.2,0.5]$:
 
-From our analysis of the Chernoff-Hoeffing bound above we can see that the confidence bound grows with the total number of actions we have taken but shrinks with the number of times we have tried this particular action. This ensures each action is tried infinitely often but still balances exploration and exploitation.\\
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{UCB_regret.png}
+\caption{Cumulative Regret}
+\end{figure}
 
-The regret for UCB1 grows at a rate of ln n.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{UCB_num_plays.png}
+\caption{Switching between machines}
+\end{figure}
+
+\textbf{<<<<<<<INSERT COMMENTARY>>>>>>>>>}
 
 \section{Bayesian approaches}
 
 \subsection{Bernoulli Bandit}
 
-We formulate a simple bandit scheme involving $K$ Machines and a Bernoulli Reward (0 or 1). We play one of the N machines at every iteration of the game for T iterations. Each Machine has a latent parameter governing its reward. At every step we draw a reward from the selected machine.\\
-
-Specifically, for each machine, we generate a probability of getting a reward of 1, $\theta_i$. We assume that $\theta_i$ is distributed as a Beta. A natural choice for the likelihood of a reward, $r_i$ is a $\text{Bernoulli}(\theta_i)$. To be clear:
+Another popular approach to solving the MAB problem is to minimize regret using Bayesian inference. In the above sections, we assumed that rewards were distributed as a Bernoulli with some latent parameter, $\theta_i$, specific to each machine. However we didn't make this explicit. The Bayesian approach is to put a prior distribution on $\theta_i$ and update that belief as we run the algorithm and learn which machines are better than others. Since rewards are generated from a Bernoulli distribution, a natural choice for the distribution on $\theta_i$ is a Beta. Formally:
 
 $$\theta_i \sim \text{Beta}(\alpha_i, \beta_i)$$
 $$r_i = \text{Reward from Machine i} \sim \text{Bernoulli}(\theta_i)$$
 
-Exploiting the conjugacy of the Beta-Bernoulli model, the posterior distribution of getting a reward from $\text{machine}_i$, after playing for $T$ iterations is:
-$$\text{Beta}(\alpha_i + R_{T}, \beta_i + T - R_{T})$$
+Exploiting the conjugacy of the Beta-Bernoulli model, the posterior distribution of getting a reward from $\text{machine}_i$, after playing for $N$ iterations is:
+$$\text{Beta}(\alpha_i + R_{N}, \beta_i + T - R_{N})$$
 
-where $R_{T} = \sum_{t=1}^{T}r_{t}$
+where $R_{N} = \sum_{t=1}^{N}r_{t}$.\\
 
-Before beginning to play, we have no prior knowledge about either Machine's propensity to yield a positive reward. Therefore, we initially set $\alpha_i, \beta_i = 1$, which is a common objective prior for the Beta distribution.\\
+Before beginning to play, we assume no prior knowledge about any machine's propensity to yield a positive reward. Therefore, we initially set $\alpha_i, \beta_i = 1$, which is a common objective prior for the Beta distribution.\\
 
-\subsection{Thompson Sampling: Hueristic approach}
+\subsection{Thompson Sampling}
 
-The generic algorithm is as follows:
+The generic algorithm used for Bayesian inference is as follows:
 
 \begin{enumerate}
 \item For $t = 1, ..., N$
@@ -116,11 +142,25 @@ The generic algorithm is as follows:
 \item $R_t = R_t + r_t$		// add reward at time $t$ to running total
 \end{enumerate}
 
-This algorithm provides a framework for how to think about this problem in a general way. To maximize expected rewards, we must optimally choose the acquisition function U.
+This algorithm provides a framework for how to think about this problem in a Bayesian way. To maximize expected rewards, we must optimally choose the policy function U.\\
 
-Note that we don't real care how accurate we become about inference of the hidden probabilities -- for this problem we are more interested in choosing the best bandit (or more accurately, becoming more confident in choosing the best bandit).
+Note that we don't really care about how accurate we become about inferences of the hidden probabilities, $\theta_i$ - for this problem we are more interested in choosing the best bandit that maximizes rewards.
 
+Below we explore 3 ways to select the policy:
 
+\begin{enumerate}
+\item \textbf{Explore}: Randomly select one of the $K$ machines, without considering how many win/losses you've seen. This is a pure eploratory strategy and is used for comparison purposes only.
+\item \textbf{Exploit}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\mathbf{E}[\theta_i]$. This is called {"Exploit"} because we are greedily choosing the best machine at each step based on expected rewards. Note however that even if we select the best expected machine, there is a non-zero probability ($\frac{\beta_i}{\alpha_i + \beta_i}$) that it fails to generate a reward. So the amount of exploration is small but non-zero. Also note that this approach is sometimes called \text{"Adbandit"}.
+\item \textbf{Thompson-Sampling}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\theta_i$. This approach falls somewhere between Exploit and Explore, but is much closer to Exploit. In expectation we expect Thompson-Sampling to be very close to Exploit.
+\end{enumerate}
+
+Below we present comparisons of the three approaches using the same dataset as above for UCB:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{Bayesian_regret.png}
+\caption{Cumulative Regret}
+\end{figure}
 
 \subsection{Gaussian Process and Reinforcement Learning}
 
