@@ -14,7 +14,7 @@
 \setlength{\parindent}{0pt}
 
 \title{Multi-Armed Bandit Problem}
-\author{Sunith Suresh, Lin Xiao, Ilan Man and Sanjay Hariharlaan}
+\author{Sunith Suresh, Lin Xiao, Ilan Man and Sanjay Hariharan}
 \date{\today} 
 \begin{document}
 \maketitle
@@ -49,7 +49,7 @@ The common theme between the algorithms outlined in this paper are that our obje
 \section{Dynamic Programming}
 
 
-We begin our analysis by constructing a simple approach to maximizing Future Expected Rewards. Consider the Bernoulli Bandit case.
+We begin our analysis by constructing a simple approach to maximizing Future Expected Rewards. Consider the Bernoulli Bandit case.\\
 
 We designate the following:
 
@@ -59,65 +59,66 @@ $$R_2 = \text{Reward from Machine 2} \sim \text{Bernoulli}(\theta_2)$$
 $$\theta_1 \sim \text{Beta}(\alpha_1, \beta_1)$$
 $$\theta_2 \sim \text{Beta}(\alpha_2, \beta_2)$$
 
-In the beginning, we have no prior knowledge about either Machine, or more specifically, about the latent parameter governing each Machine. Therefore, we initially set $\alpha_1, \alpha_2, \beta_1, \beta_2 = 1$. 
+In the beginning, we have no prior knowledge about either Machine, or more specifically, about the latent parameter governing each Machine. Therefore, we initially set $\alpha_1, \alpha_2, \beta_1, \beta_2 = 1$. \\
 
-Given our goals above, the main question becomes: **How do we choose which Machine to play in each Iteration?** We will refer to this question as our utility or acquisition function $U(\theta | X) = U(\alpha_1, \beta_1, \alpha_2, \beta_2 | X)$.
+Given our goals above, the main question becomes: **How do we choose which Machine to play in each Iteration?** We will refer to this question as our utility or acquisition function $U(\theta | X) = U(\alpha_1, \beta_1, \alpha_2, \beta_2 | X)$.\\
 
-As we begin playing and gathering information, we continuously update our parameters of interest based on the outcome. Specifically:
+As we begin playing and gathering information, we continuously update our parameters of interest based on the outcome. Specifically:\\
 
-1. $U(\alpha_1, \beta_1, \alpha_2, \beta_2) = j$ 
-    * ( We choose Machine j )
-2. $R_j = i$  
-    * ( We play Machine j, and get Reward i )
-3. If $R_j = 1$:
-    $\alpha_j = \alpha_j + 1$  
-4. If $R_j = 0$:
-    $\beta_j = \beta_j + 1$  
+1. $U(\alpha_1, \beta_1, \alpha_2, \beta_2) = j$ \\
+    * ( We choose Machine j )\\
+2. $R_j = i$  \\
+    * ( We play Machine j, and get Reward i )\\
+3. If $R_j = 1$:\\
+    $\alpha_j = \alpha_j + 1$  \\
+4. If $R_j = 0$:\\
+    $\beta_j = \beta_j + 1$  \\
 
-The idea is to update our prior belief on the success of the individual Machines based on our empirical rewards. $\alpha$ represents success, while $\beta$ represents failure
+The idea is to update our prior belief on the success of the individual Machines based on our empirical rewards. $\alpha$ represents success, while $\beta$ represents failure\\
 
-Before we discuss how to construct our Acquisition Function $U(\theta|X)$ which will help us decide which Machine to play at each iteration, we see two interesting points:
+Before we discuss how to construct our Acquisition Function $U(\theta|X)$ which will help us decide which Machine to play at each iteration, we see two interesting points:\\
 
-At time T = 1, we have no prior belief concerning any Machine. Thus, it will not matter which Machine we pick the first time around, though it will influence all subsequent choices.
+At time T = 1, we have no prior belief concerning any Machine. Thus, it will not matter which Machine we pick the first time around, though it will influence all subsequent choices.\\
 
-At time T = N, we are at our final trial, and thus are only concerned for the Reward on this trial. As such, we will opt for a **Greedy** approach and pick the Machine with the highest Expected Reward - max($\frac{\alpha_1}{\alpha_1 + \beta_1}, \frac{\alpha_2}{\alpha_2 + \beta_2}$)
+At time T = N, we are at our final trial, and thus are only concerned for the Reward on this trial. As such, we will opt for a **Greedy** approach and pick the Machine with the highest Expected Reward - max($\frac{\alpha_1}{\alpha_1 + \beta_1}, \frac{\alpha_2}{\alpha_2 + \beta_2}$)\\
 
-For times T = 2,...,N-1, we must choose the Machine based on the Expected Sum of Future Rewards, based on our framework above: $\mathbb{E}(\displaystyle\sum_{i=1}^{n} R_i)$
+For times T = 2,...,N-1, we must choose the Machine based on the Expected Sum of Future Rewards, based on our framework above: $\mathbb{E}(\displaystyle\sum_{i=1}^{n} R_i)$\\
 
-At time T = t, $\mathbb{E}(\displaystyle\sum_{i=t}^{n} R_i|M_{1:t-1}, R_{1:t-1})$ = $\mathbb{E}(\displaystyle\sum_{i=t+1}^{n} R_i|\theta)$ + $\mathbb{E}(R_t|\theta)$  
-$M_{1:t}$ = Machines Chosen from times 1 to t  
-$R_{1:t}$ = Rewards Given from times 1 to t
+At time T = t, $\mathbb{E}(\displaystyle\sum_{i=t}^{n} R_i|M_{1:t-1}, R_{1:t-1})$ = $\mathbb{E}(\displaystyle\sum_{i=t+1}^{n} R_i|\theta)$ + $\mathbb{E}(R_t|\theta)$  \\
+$M_{1:t}$ = Machines Chosen from times 1 to t  \\
+$R_{1:t}$ = Rewards Given from times 1 to t\\
 
-Given we perform N Trials, we construct our Algorithm in a Backwards Fashion:
+Given we perform N Trials, we construct our Algorithm in a Backwards Fashion:\\
 
-1. For T = N:
-    * For each node, we choose the **Greedy** option, that is, the one with the maximum expected return.
+1. For T = N:\\
+    * For each node, we choose the **Greedy** option, that is, the one with the maximum expected return.\\
 
-2. For T = N-1
-    * Given that we know the most optimal choice for the last Trial, we select the Machine on this trial that will give us the maximum Expected **sum** of Rewards
-    * $\mathbb{E}(R_{N-1} + R_{N})$, and we know $R_N$ from the previous iteration
+2. For T = N-1\\
+    * Given that we know the most optimal choice for the last Trial, we select the Machine on this trial that will give us the maximum Expected **sum** of Rewards\\
+    * $\mathbb{E}(R_{N-1} + R_{N})$, and we know $R_N$ from the previous iteration\\
     
-3. For T = N-2,...,2:
-    * We follow the similar intuition as above, choosing the most optimal choice for the maximum Expected sum of rewards, given the optimal choice for all subseqent trials already calculated
-    * $\mathbb{E}(\displaystyle\sum_{i=T}^{n} R_i)$ = $\mathbb{E}(\displaystyle\sum_{i=t+1}^{n} R_i)$ + $\mathbb{E}(R_t)$
+3. For T = N-2,...,2:\\
+    * We follow the similar intuition as above, choosing the most optimal choice for the maximum Expected sum of rewards, given the optimal choice for all subseqent trials already calculated\\
+    * $\mathbb{E}(\displaystyle\sum_{i=T}^{n} R_i)$ = $\mathbb{E}(\displaystyle\sum_{i=t+1}^{n} R_i)$ + $\mathbb{E}(R_t)$\\
     
-4. For T = 1:
-    * From our above note, the first iteration does not matter, as we have no prior knowledge. We select any Machine at random.
+4. For T = 1:\\
+    * From our above note, the first iteration does not matter, as we have no prior knowledge. We select any Machine at random.\\
 
-As an illustration, consider the following tree. Here we denote $f(a_1, b_1, a_2, b_2)$ as the Posterior parameters of the Machine at time $T$, starting from the beginning/
+As an illustration, consider the following tree. Here we denote $f(a_1, b_1, a_2, b_2)$ as the Posterior parameters of the Machine at time $T$, starting from the beginning\\
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Dynamic_Programming_Tree.png}
+\includegraphics[scale=0.75]{Dynamic_Programming_Tree.png}
 \caption{Forest of Possible Outcomes}
 \end{figure}
 
-As time increases, the complexity of possible branches increase exponentially, but it is important to note that some branches merge back together. Visually, our algorithm takes in two pieces of information:
+As time increases, the complexity of possible branches increase exponentially, but it is important to note that some branches merge back together. Visually, our algorithm takes in two pieces of information:\\
 
-1. Current parameters of the Machine based on previous observations
-2. Number of Trials we expect to perform
+1. Current parameters of the Machine based on previous observations\\
+2. Number of Trials we expect to perform\\
 
-Again, the goal is to maximize the expected future sum of rewards based on the current parameters and the number of future trials. Our algorithm creates a tree of all possible future states, like above, and dynamically works backwards, assuming at the final stage we want to be completely greedy (since it is our last trial). The output is which Machine to play at the current stage, as well as the expected sum of rewards given you follow the algorithm at each trial.
+Again, the goal is to maximize the expected future sum of rewards based on the current parameters and the number of future trials. Our algorithm creates a tree of all possible future states, like above, and dynamically works backwards, assuming at the final stage we want to be completely greedy (since it is our last trial). The output is which Machine to play at the current stage, as well as the expected sum of rewards given you follow the algorithm at each trial.\\
+
 
 One might assume that we would be greedy at every approach, but our algorithm proves otherwise. It bases its decision on expected future rewards, and it is interesting to see it choose the Machine with the lower expected reward, based on its future possible states.
 
