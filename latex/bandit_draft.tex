@@ -48,7 +48,34 @@ The common theme between the algorithms outlined in this paper are that our obje
 
 \subsection{$\epsilon$-greedy}
 
-- Sunith
+The most simple approach to tackling the MAB problem is the $\epsilon$-greedy algorithim. As explained earlier, the greedy algorithim always takes the best action at every trial. In other words, it simply chooses the bandit with highest expected reward at every iteration. The problem with this purely exploitative approach is that, it will take a large number of iteration to explore all the machines and converge onto the best machine. The $\epsilon$-greedy algorithim is almost a greedy algorithim as it generally exploits the best machine, however every once in a while it explores other machines.\\ 
+
+The parameter $\epsilon$ controls the percentage of iterations for which the algorithim explores machines. The algorithim can be described as follows: For a proportion $1 - \epsilon$ of the trials, choose the best machine(i.e the machine with highest expected reward), and for a proportion of $\epsilon$ explore other machines (with uniform probability).\\
+
+Given machines $\{1,...,K\}$ with initial empirical means $\{\hat{\mu_1(0)},...,\hat{\mu_K(0)}\}$ For trials $t = \{1,...,N\}$, the probability of choosing machine $i$ is given by
+
+$$p_i(t+1) = \begin{cases}
+  1- \epsilon + \frac{\epsilon}{K}, & \text{if } i = argmax_{j=1,..,K}\hat{\mu_j(t)}, \\
+  \frac{\epsilon}{K}, & \text{otherwise}.
+\end{cases}$$
+
+
+It follows from the algorithim that if $\epsilon = 0$, the algorithim reduces to a purely exploitative one, whereas if $\epsilon = 1$, it reduces to a purely explorative one. Therefore the value of $\epsilon$, defined by the user, controls the level of exploration and exploitation employed by the algorithim.\\
+
+The $\epsilon$-greedy algorithim is considered to be suboptimal due to the constant value of $\epsilon$. As the number of trials increase, asymptotically we can be reasonably certain as to which machine is the best machine from the observed rewards. However, the algorithim will always explore for $\epsilon$ percent of the trials. To address this issue, variants of the algorithim have been proposed. Two popular variants are known as $\epsilon$-first algorithim and $\epsilon$-decreasing algorithim.\\
+
+The $\epsilon$-first algorithim consists of doing the exploration all at once at the beginning and then switching to pure exploitation. Given $N$ total trials, for $\epsilon N$ trials, the machines are randomly chosen (with uniform probability). After the exploration phase, for the remaing $\big( 1-\epsilon \big) N$ trials, the algorithim switches to pure exploitation, choosing the machine with highest expected rewards.\\
+
+The $\epsilon$-decreasing algorithim consists of decreasing the value of $\epsilon$ with number of trials. The algorithim progresses from highly explorative approach in the beginning to a highly exploitative one towards the end.\\
+
+CesaBianchi and Fisher (1998) found that $\epsilon$-decreasing algorithim is theoretically efficient (with respect to regret). However empirical studies by Vermorel and Mohri (2005) do not seem to find any significant improvements with the variants of the algorithim when compared to the original $\epsilon$-greedy algorithim.\\
+
+
+References
+Bandit algorithims for Website Optimization by J. White
+Algorithms for the multi-armed bandit problem by V. Kuleshov and D. Precup
+Multi-armed Bandit Algorithms and Empirical Evaluation M. Mohri and J. Vermorel
+Peter Auer, Nicolo Cesa-Bianchi, and Paul Fischer. Finite-time analysis of the multiarmed bandit problem. Machine Learning, 47((2-3)), 2002.
 
 \subsection{Upper Confidence Bounds}
 
