@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  4 MAY 2016 23:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  4 MAY 2016 23:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -698,11 +698,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 144--145
 
  []
 
-<thompson_regret.png, id=29, 840.13875pt x 505.89pt>
+<thompson_regret.png, id=29, 852.18375pt x 513.92pt>
 File: thompson_regret.png Graphic file (type png)
  <use thompson_regret.png>
 Package pdftex.def Info: thompson_regret.png used on input line 158.
-(pdftex.def)             Requested size: 336.04955pt x 202.3524pt.
+(pdftex.def)             Requested size: 340.86745pt x 205.56435pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 166--167
 
@@ -738,11 +738,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 186--187
 
  []
 
-<eps_greedy.png, id=35, 840.13875pt x 505.89pt>
+<eps_greedy.png, id=35, 852.18375pt x 513.92pt>
 File: eps_greedy.png Graphic file (type png)
  <use eps_greedy.png>
 Package pdftex.def Info: eps_greedy.png used on input line 190.
-(pdftex.def)             Requested size: 336.04955pt x 202.3524pt.
+(pdftex.def)             Requested size: 340.86745pt x 205.56435pt.
  [5]
 Underfull \hbox (badness 10000) in paragraph at lines 202--203
 
@@ -758,29 +758,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 210--211
 
  []
 
-
+[6 <./eps_greedy.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 223--224
 
  []
 
-[6 <./eps_greedy.png>] <UCB_regret.png, id=44, 845.1575pt x 508.90125pt>
+<UCB_regret.png, id=44, 852.18375pt x 513.92pt>
 File: UCB_regret.png Graphic file (type png)
-
-<use UCB_regret.png>
+ <use UCB_regret.png>
 Package pdftex.def Info: UCB_regret.png used on input line 250.
-(pdftex.def)             Requested size: 338.057pt x 203.55688pt.
- <UCB_num_plays.png, id=45, 845.1575pt x 508.90125pt>
-File: UCB_num_plays.png Graphic file (type png)
+(pdftex.def)             Requested size: 340.86745pt x 205.56435pt.
 
-<use UCB_num_plays.png>
+<UCB_num_plays.png, id=45, 852.18375pt x 513.92pt>
+File: UCB_num_plays.png Graphic file (type png)
+ <use UCB_num_plays.png>
 Package pdftex.def Info: UCB_num_plays.png used on input line 258.
-(pdftex.def)             Requested size: 338.057pt x 203.55688pt.
- [7 <./UCB_regret.png>]
-<all.png, id=51, 840.13875pt x 505.89pt>
+(pdftex.def)             Requested size: 340.86745pt x 205.56435pt.
+
+[7 <./UCB_regret.png>] <all.png, id=51, 852.18375pt x 513.92pt>
 File: all.png Graphic file (type png)
  <use all.png>
 Package pdftex.def Info: all.png used on input line 266.
-(pdftex.def)             Requested size: 336.04955pt x 202.3524pt.
+(pdftex.def)             Requested size: 340.86745pt x 205.56435pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 277--278
 
@@ -855,7 +854,7 @@ c/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmsy7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmti10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/am
 sfonts/symbols/msbm10.pfb>
-Output written on bandit_draft.pdf (10 pages, 720786 bytes).
+Output written on bandit_draft.pdf (10 pages, 757938 bytes).
 PDF statistics:
  128 PDF objects out of 1000 (max. 8388607)
  76 compressed objects within 1 object stream
