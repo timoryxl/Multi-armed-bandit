@@ -336,6 +336,16 @@ We analyze our Gaussian Process scenario over a large number of Machines in a co
 
 In Figure 6, the latent reward function is also plotted, and we can see that over time, our observed values tend to cluster close to the highest point (ie: the best machine), and the overall fit matching close to the true function.
 
+We also compare the cumulative Reward and Regret in the GP method.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.8]{reward_regret.png}
+\caption{Cumulative Regret and Reward}
+\end{figure}
+
+We can see that in the first 10 iterations, the GP method is exploring high variance areas of our reward function, resulting in a lower reward and higher regret, but after this point, it settles upon the best options. From there, the regret flattens out and the reward increases linearly while exploiting the best machines.
+
 \section{Conclusion}
 
 \section{References}
