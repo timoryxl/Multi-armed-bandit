@@ -1,8 +1,10 @@
 # Fdb version 3
-["pdflatex"] 1462411161 "bandit_draft.tex" "bandit_draft.pdf" "bandit_draft" 1462411523
+["pdflatex"] 1462412581 "bandit_draft.tex" "bandit_draft.pdf" "bandit_draft" 1462412582
   "./Dynamic_Programming_Tree.png" 1462399985 89525 1dfe2251900c11caf23692084c6da987 ""
-  "./UCB_num_plays.png" 1462315026 30686 eed8ad7db2d7d1be07d882eddc53a97a ""
-  "./UCB_regret.png" 1462315035 55090 3c3b3745f341a8e0a43be306c11c6319 ""
+  "./UCB_num_plays.png" 1462412351 34495 8d771d5b7b0c2aeae9b6d286a2d320da ""
+  "./UCB_regret.png" 1462412363 45580 bf615b699e3bf1cd21bbcc69ea74dacc ""
+  "./all.png" 1462412336 39615 e9b936b62176dfa3faf511e79a5b931a ""
+  "./eps_greedy.png" 1462412471 34514 3c065bc2ac231b28b528d53cd0e5e06a ""
   "./thompson_regret.png" 1462410994 30963 3cdf1c41c03d8aae8b764a6ba3e0e925 ""
   "/usr/local/texlive/2015/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2015/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -110,12 +112,14 @@
   "/usr/local/texlive/2015/texmf-var/web2c/pdftex/pdflatex.fmt" 1432479681 3849859 39a7d258195bde2394e244961601fbc5 ""
   "/usr/local/texlive/2015/texmf.cnf" 1432479636 577 0d611272082f3cdb8e80e09a3c69cf07 ""
   "Dynamic_Programming_Tree.png" 1462399985 89525 1dfe2251900c11caf23692084c6da987 ""
-  "UCB_num_plays.png" 1462315026 30686 eed8ad7db2d7d1be07d882eddc53a97a ""
-  "UCB_regret.png" 1462315035 55090 3c3b3745f341a8e0a43be306c11c6319 ""
-  "bandit_draft.aux" 1462411162 1752 abb1d437d6cf4fffc35190b0ecdf2a28 ""
-  "bandit_draft.tex" 1462411522 20329 fc248a48ef97259b67563247f37bccc1 ""
+  "UCB_num_plays.png" 1462412351 34495 8d771d5b7b0c2aeae9b6d286a2d320da ""
+  "UCB_regret.png" 1462412363 45580 bf615b699e3bf1cd21bbcc69ea74dacc ""
+  "all.png" 1462412336 39615 e9b936b62176dfa3faf511e79a5b931a ""
+  "bandit_draft.aux" 1462412582 1718 7d032e6e131522540e7d95e14725938f ""
+  "bandit_draft.tex" 1462412580 20358 40c3aa6c57233345f61b16d1024f2836 ""
+  "eps_greedy.png" 1462412471 34514 3c065bc2ac231b28b528d53cd0e5e06a ""
   "thompson_regret.png" 1462410994 30963 3cdf1c41c03d8aae8b764a6ba3e0e925 ""
   (generated)
   "bandit_draft.log"
-  "bandit_draft.pdf"
   "bandit_draft.aux"
+  "bandit_draft.pdf"

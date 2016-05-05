@@ -154,7 +154,7 @@ We ran these three approaches on a dataset of $K=5$ machines and calculate the c
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{thompson_regret.png}
+\includegraphics[scale=0.4]{thompson_regret.png}
 \caption{Cumulative Regret}
 \end{figure}
 
@@ -184,6 +184,11 @@ The $\epsilon$-decreasing algorithm consists of decreasing the value of $\epsilo
 
 CesaBianchi and Fisher (1998) found that $\epsilon$-decreasing algorithm is theoretically efficient (with respect to regret). However empirical studies by Vermorel and Mohri (2005) do not seem to find any significant improvements with the variants of the algorithm when compared to the original $\epsilon$-greedy algorithm.\\
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{eps_greedy.png}
+\caption{Cumulative Regret}
+\end{figure}
 
 References
 Bandit algorithms for Website Optimization by J. White
@@ -241,19 +246,22 @@ Below we run UCB1 on 5 machines with true reward distribution, $[0.05,0.1,0.3,0.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{UCB_regret.png}
+\includegraphics[scale=0.4]{UCB_regret.png}
 \caption{Cumulative Regret}
 \end{figure}
 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{UCB_num_plays.png}
+\includegraphics[scale=0.4]{UCB_num_plays.png}
 \caption{Switching between machines}
 \end{figure}
 
-\textbf{<<<<<<<INSERT COMMENTARY>>>>>>>>>}
-
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{all.png}
+\caption{Switching between machines}
+\end{figure}
 
 \subsection{Gaussian Process and Reinforcement Learning}
 

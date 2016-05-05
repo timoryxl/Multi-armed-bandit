@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  4 MAY 2016 21:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  4 MAY 2016 21:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -677,14 +677,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 143--144
 File: thompson_regret.png Graphic file (type png)
  <use thompson_regret.png>
 Package pdftex.def Info: thompson_regret.png used on input line 157.
-(pdftex.def)             Requested size: 420.06834pt x 252.94437pt.
+(pdftex.def)             Requested size: 336.04955pt x 202.3524pt.
 
-[4 <./thompson_regret.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 165--166
 
  []
 
-
+[4 <./thompson_regret.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 167--168
 
  []
@@ -714,69 +713,79 @@ Underfull \hbox (badness 10000) in paragraph at lines 185--186
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 196--197
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 198--199
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
+<eps_greedy.png, id=35, 840.13875pt x 505.89pt>
+File: eps_greedy.png Graphic file (type png)
+ <use eps_greedy.png>
+Package pdftex.def Info: eps_greedy.png used on input line 189.
+(pdftex.def)             Requested size: 336.04955pt x 202.3524pt.
+ [5]
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
+Underfull \hbox (badness 10000) in paragraph at lines 203--204
 
  []
 
-<UCB_regret.png, id=39, 848.16875pt x 508.90125pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--210
+
+ []
+
+[6 <./eps_greedy.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 222--223
+
+ []
+
+<UCB_regret.png, id=44, 845.1575pt x 508.90125pt>
 File: UCB_regret.png Graphic file (type png)
  <use UCB_regret.png>
-Package pdftex.def Info: UCB_regret.png used on input line 244.
-(pdftex.def)             Requested size: 424.08333pt x 254.45pt.
+Package pdftex.def Info: UCB_regret.png used on input line 249.
+(pdftex.def)             Requested size: 338.057pt x 203.55688pt.
 
-[6] <UCB_num_plays.png, id=43, 848.16875pt x 508.90125pt>
+<UCB_num_plays.png, id=45, 845.1575pt x 508.90125pt>
 File: UCB_num_plays.png Graphic file (type png)
+ <use UCB_num_plays.png>
+Package pdftex.def Info: UCB_num_plays.png used on input line 256.
+(pdftex.def)             Requested size: 338.057pt x 203.55688pt.
 
-<use UCB_num_plays.png>
-Package pdftex.def Info: UCB_num_plays.png used on input line 251.
-(pdftex.def)             Requested size: 424.08333pt x 254.45pt.
- [7 <./UCB_regret.png> <./UCB_num_plays.png>] [8]
-(./bandit_draft.aux) ) 
+[7 <./UCB_regret.png>] <all.png, id=51, 840.13875pt x 505.89pt>
+File: all.png Graphic file (type png)
+ <use all.png>
+Package pdftex.def Info: all.png used on input line 262.
+(pdftex.def)             Requested size: 336.04955pt x 202.3524pt.
+
+[8 <./UCB_num_plays.png> <./all.png>] [9] (./bandit_draft.aux) ) 
 Here is how much of TeX's memory you used:
- 5096 strings out of 493089
- 69772 string characters out of 6134842
+ 5106 strings out of 493089
+ 69915 string characters out of 6134842
  153614 words of memory out of 5000000
- 8453 multiletter control sequences out of 15000+600000
+ 8461 multiletter control sequences out of 15000+600000
  12485 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,9n,39p,845b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi5.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-17.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.
-pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
->
-Output written on bandit_draft.pdf (8 pages, 338016 bytes).
+</usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texliv
+e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2015
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2015/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2015/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2015/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2015/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2015/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2015/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2015/texmf-dist/font
+s/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on bandit_draft.pdf (9 pages, 395130 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 69 compressed objects within 1 object stream
+ 111 PDF objects out of 1000 (max. 8388607)
+ 71 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
