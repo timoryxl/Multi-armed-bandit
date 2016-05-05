@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1462412581 "bandit_draft.tex" "bandit_draft.pdf" "bandit_draft" 1462412582
+["pdflatex"] 1462413583 "bandit_draft.tex" "bandit_draft.pdf" "bandit_draft" 1462413584
   "./Dynamic_Programming_Tree.png" 1462399985 89525 1dfe2251900c11caf23692084c6da987 ""
   "./UCB_num_plays.png" 1462412351 34495 8d771d5b7b0c2aeae9b6d286a2d320da ""
   "./UCB_regret.png" 1462412363 45580 bf615b699e3bf1cd21bbcc69ea74dacc ""
@@ -115,11 +115,11 @@
   "UCB_num_plays.png" 1462412351 34495 8d771d5b7b0c2aeae9b6d286a2d320da ""
   "UCB_regret.png" 1462412363 45580 bf615b699e3bf1cd21bbcc69ea74dacc ""
   "all.png" 1462412336 39615 e9b936b62176dfa3faf511e79a5b931a ""
-  "bandit_draft.aux" 1462412582 1718 7d032e6e131522540e7d95e14725938f ""
-  "bandit_draft.tex" 1462412580 20358 40c3aa6c57233345f61b16d1024f2836 ""
+  "bandit_draft.aux" 1462413584 1730 b9ba82ca9c83ed4094f5dc16bfd82c20 ""
+  "bandit_draft.tex" 1462413580 21442 ab9361db2bdcbb736ddc2cbbbbb7f073 ""
   "eps_greedy.png" 1462412471 34514 3c065bc2ac231b28b528d53cd0e5e06a ""
   "thompson_regret.png" 1462410994 30963 3cdf1c41c03d8aae8b764a6ba3e0e925 ""
   (generated)
   "bandit_draft.log"
-  "bandit_draft.aux"
   "bandit_draft.pdf"
+  "bandit_draft.aux"

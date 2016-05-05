@@ -150,7 +150,7 @@ Below we review 3 ways to select the policy, $U$:
 \item \textbf{Thompson-Sampling}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\theta_i$. This approach falls somewhere between Exploit and Explore, but is much closer to Exploit. In expectation we expect Thompson-Sampling to be very close to Exploit.
 \end{enumerate}
 
-We ran these three approaches on a dataset of $K=5$ machines and calculate the cumulative regret after 500 iterations.
+We ran these three approaches on a dataset of $K=5$ machines with true reward distribution, $[0.05,0.1,0.3,0.2,0.5]$ and calculate the cumulative regret after 300 iterations. Below is the output for 1 particular run:
 
 \begin{figure}[H]
 \centering
@@ -158,7 +158,7 @@ We ran these three approaches on a dataset of $K=5$ machines and calculate the c
 \caption{Cumulative Regret}
 \end{figure}
 
-As expected, the Explore strategy performs the worst, while Thompson-Sampling and Exploit (Adbandit) perform similarly. 
+As expected, the Explore strategy performs the worst. In this run, Adbandit performed the best. If we took the average of many runs, we'd expect Thompson-Sampling and Adbandit to perform similarly. Note that Adbandit finds the best machine very quickly and stays there. If $K$ was larger, then it would be more exploring, or potentially get stuck in a poorly performing machine for a long time before finding a better one. We expect Thompson-Sampling to outperform Adbandit for larger $K$.
 
 \subsection{$\epsilon$-greedy}
 
@@ -242,14 +242,15 @@ Assuming $K$ machines:
 	\end{enumerate}
 \end{enumerate}
 
-Below we run UCB1 on 5 machines with true reward distribution, $[0.05,0.1,0.3,0.2,0.5]$:
+Below we run UCB1 on the same dataset as above:
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{UCB_regret.png}
-\caption{Cumulative Regret}
+\caption{Cumulative for all 5 machines}
 \end{figure}
 
+Above we see that, as expected, Machine 5 has the lowest regret, since it has the highest $\theta$. 
 
 \begin{figure}[H]
 \centering
@@ -257,11 +258,15 @@ Below we run UCB1 on 5 machines with true reward distribution, $[0.05,0.1,0.3,0.
 \caption{Switching between machines}
 \end{figure}
 
+As expected, machine 5 is played the most often, even though the worse off machines are still being played. Separation from the other machines occurs around 60 iterations. Also note that even at 300 runs, there isn't much separation between machines 1 and 2, given how similar their $\theta$ is.
+
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{all.png}
-\caption{Switching between machines}
+\caption{Comparing all 5 approaches}
 \end{figure}
+
+UCB1 does the worst in this particular run, compared to the other non-naive approaches. This suggests that while it provides nice theoretical guarantees, Bayesian heuristic approaches and even simple ones like $\epsilon$-greedy can outperform it.
 
 \subsection{Gaussian Process and Reinforcement Learning}
 
