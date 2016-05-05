@@ -1,7 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  4 MAY 2016 18:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  4 MAY 2016 21:19
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **bandit_draft.tex
 (./bandit_draft.tex
@@ -625,7 +624,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 33--34
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--46
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
 
  []
 
@@ -637,11 +636,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 51--52
 [1
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 53--54
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 63--64
 
  []
@@ -652,149 +646,134 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--66
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--68
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 69--70
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 71--72
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--85
-
- []
-
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 103--104
-
- []
-
-<UCB_regret.png, id=21, 848.16875pt x 508.90125pt>
-File: UCB_regret.png Graphic file (type png)
- <use UCB_regret.png>
-Package pdftex.def Info: UCB_regret.png used on input line 130.
-(pdftex.def)             Requested size: 424.08333pt x 254.45pt.
-
-[3] <UCB_num_plays.png, id=29, 848.16875pt x 508.90125pt>
-File: UCB_num_plays.png Graphic file (type png)
-
-<use UCB_num_plays.png>
-Package pdftex.def Info: UCB_num_plays.png used on input line 137.
-(pdftex.def)             Requested size: 424.08333pt x 254.45pt.
- [4 <./UCB_regret.png> <./UCB_num_plays.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 153--154
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 155--156
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 161--162
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 166--167
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 174--175
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 197--198
-
- []
-
-<Dynamic_Programming_Tree.png, id=39, 610.28pt x 213.79875pt>
-File: Dynamic_Programming_Tree.png Graphic file (type png)
-
-<use Dynamic_Programming_Tree.png>
-Package pdftex.def Info: Dynamic_Programming_Tree.png used on input line 201.
-(pdftex.def)             Requested size: 457.70888pt x 160.34866pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 208--209
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 212--213
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
-
- []
-
-[6 <./Dynamic_Programming_Tree.png>]
-<Bayesian_regret.png, id=44, 849.1725pt x 505.89pt>
-File: Bayesian_regret.png Graphic file (type png)
- <use Bayesian_regret.png>
-Package pdftex.def Info: Bayesian_regret.png used on input line 244.
-(pdftex.def)             Requested size: 424.5852pt x 252.94437pt.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 252.
-
-
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 79.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 252.
- [7 <./Bayesian_regret.png>] [8] (./bandit_draft.aux) ) 
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 79.
+ [2]
+<Dynamic_Programming_Tree.png, id=23, 610.28pt x 213.79875pt>
+File: Dynamic_Programming_Tree.png Graphic file (type png)
+
+<use Dynamic_Programming_Tree.png>
+Package pdftex.def Info: Dynamic_Programming_Tree.png used on input line 111.
+(pdftex.def)             Requested size: 457.70888pt x 160.34866pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
+
+ []
+
+[3 <./Dynamic_Programming_Tree.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 143--144
+
+ []
+
+<thompson_regret.png, id=29, 840.13875pt x 505.89pt>
+File: thompson_regret.png Graphic file (type png)
+ <use thompson_regret.png>
+Package pdftex.def Info: thompson_regret.png used on input line 157.
+(pdftex.def)             Requested size: 420.06834pt x 252.94437pt.
+
+[4 <./thompson_regret.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 167--168
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 177--178
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 179--180
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--197
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--199
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 204--205
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 217--218
+
+ []
+
+<UCB_regret.png, id=39, 848.16875pt x 508.90125pt>
+File: UCB_regret.png Graphic file (type png)
+ <use UCB_regret.png>
+Package pdftex.def Info: UCB_regret.png used on input line 244.
+(pdftex.def)             Requested size: 424.08333pt x 254.45pt.
+
+[6] <UCB_num_plays.png, id=43, 848.16875pt x 508.90125pt>
+File: UCB_num_plays.png Graphic file (type png)
+
+<use UCB_num_plays.png>
+Package pdftex.def Info: UCB_num_plays.png used on input line 251.
+(pdftex.def)             Requested size: 424.08333pt x 254.45pt.
+ [7 <./UCB_regret.png> <./UCB_num_plays.png>] [8]
+(./bandit_draft.aux) ) 
 Here is how much of TeX's memory you used:
- 5100 strings out of 493089
- 69810 string characters out of 6134842
+ 5096 strings out of 493089
+ 69772 string characters out of 6134842
  153614 words of memory out of 5000000
- 8455 multiletter control sequences out of 15000+600000
- 13104 words of font info for 54 fonts, out of 8000000 for 9000
+ 8453 multiletter control sequences out of 15000+600000
+ 12485 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,9n,39p,824b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2015
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2015/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2015/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2015/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2015/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2015/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2015/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2015/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2015/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2015/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2015/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2015/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2015/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/p
-ublic/amsfonts/symbols/msbm10.pfb>
-Output written on bandit_draft.pdf (8 pages, 341373 bytes).
+ 38i,9n,39p,845b,251s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmmi5.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+17.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.
+pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
+>
+Output written on bandit_draft.pdf (8 pages, 338016 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  69 compressed objects within 1 object stream
