@@ -105,7 +105,7 @@ Given we perform $N$ trials, we construct our algorithm in a backwards fashion:
 	\end{itemize}
 \end{enumerate}
 
-As an illustration, consider the following tree. Here we denote $f(\alpha_1, \beta_1, \alpha_2, \beta_2)$ as the posterior parameters of the machine at time $T$, starting from the beginning \textbf{CAN YOU ELABORATE ON WHAT f IS? WHAT'S THE OUTPUT? WHAT ARE THE BRANCHES EXACTLY?}:
+As an illustration, consider the following tree. Here we denote $f(\alpha_1, \beta_1, \alpha_2, \beta_2)$ as the posterior parameters of the machine at time $T$. Note that $f$ here is a general utility function that determines which Machine to play at the given stage. It takes in the updated parameters for each machine. Machine 1 has parameters $\alpha_1$ and $\beta_1$, and Machine 2 has parameters $\alpha_2$ and $\beta_2$. Once a machine is selected, we play the Machine, and in our Bernoulli setup, are given a reward or no reward. We then move down the branch accordingly, based on the Machine we chose, and update the $\alpha$ or $\beta$ parameter depending on the outcome.
 
 \begin{figure}[H]
 \centering
@@ -122,7 +122,26 @@ As time increases, the complexity of possible branches increase exponentially, b
 
 Our algorithm creates a tree of all possible future states, like above, and dynamically works backwards, assuming at the final stage we want to be completely greedy (since it is our last trial). The output of the algorithm is \textbf{the specific machine we should play at the current stage}, as well as the expected sum of rewards given you follow the algorithm at each trial.\\
 
-One might assume that we would be greedy at every approach, but our algorithm proves otherwise. It bases its decision on expected future rewards, and it is interesting to see it choose the machine with the lower expected reward, based on its future possible states.\textbf{WHERE HAVE WE SEEN THIS? DO YOU HAVE AN EXAMPLE? ALSO WHY IS IT INTERESTING? I.E. BECAUSE WE WOULDN'T EXPECT IT BASED ON THE GREEDY APPROACH? MAYBE TALK ABOUT WHY WE DIDN'T IMPLEMENT THIS? AND CAN YOU ADD IN SOMETHING LEADING TO THE NEXT SECTIONS WHERE WE DISCUSS OTHER ALGORITHMS THAT WE IMPLEMENTED?}
+Initially, we assumed this algorithm would output the greedy choice at every stage. By our definition, the greedy choice is the one with the highest expected return, or the Machine with the highest value for $\frac{\alpha}{\alpha + \beta}$. However, upon implementing the algorithm, it proved otherwise! It correctly generates the full tree of possible states, and works backward to select the best choice given all possible future states.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlllllll}
+  \hline
+ & $\alpha_1$ & $\beta_1$ & $\alpha_2$ & $\beta_2$ & Greedy & Dynamic Programming & Expected Reward \\ 
+  \hline
+   & 2 & 1 & 1 & 1 & Machine 1 & Machine 1 & 5.75 \\ 
+   & 1 & 1 & 2 & 1 & Machine 2 & Machine 2 & 5.75 \\ 
+   & 3 & 4 & 1 & 1 & Machine 2 & Machine 1 & 5.26 \\ 
+   & 2 & 2 & 5 & 6 & Machine 1 & Machine 2 & 5.15 \\ 
+   & 5 & 5 & 6 & 6 & N/A & Machine 1 & 5.05 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+The above table of simulations, given several possible parameter inputs, and $N=3$ for each turn. The first two rows are trivial, as the Greedy and Dynamic approach both pick the Machine with the highest Expected Reward. The next two show a marked change. In the 3rd simulation, the Greedy algorithm would choose Machine 2, as its Expected Reward is $\frac{1}{2}$, but based on the possible consequences of choosing that branch, it opts for the safer choice, Machine 1. The 4th simulation is similar, where our algorithm chooses the safer choice, ie: the one with more data points and less chance of having a poor path. The final simulation reflects this result as well, as both Machines have an identical expected reward, so our Greedy Algorithm will not care which one we pick, but our algorithm prefers the one with more data.
+
+Note that our algorithm dynamically updates our Machine parameters based on rewards, but we did not define any latent parameters for our Machines. Next, we will explore other algorithms, and compare each one's effectiveness based on Bandits with 'true' parameters.
 
 \subsection{Thompson Sampling}
 
