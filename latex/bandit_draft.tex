@@ -151,7 +151,7 @@ Below we review 3 ways to select the policy, $U$:
 \item \textbf{Thompson-Sampling}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\theta_i$. This approach falls somewhere between Exploit and Explore, but is much closer to Exploit. In expectation we expect Thompson-Sampling to be very close to Exploit.
 \end{enumerate}
 
-We ran these three approaches on a dataset of $K=5$ machines with true reward distribution, $[0.05,0.1,0.3,0.2,0.5]$ and calculate the cumulative regret after 300 iterations. Below is the output for 1 particular run:
+We ran these three approaches on a dataset of $K=5$ machines with true reward distribution, $\theta = [0.05,0.1,0.3,0.2,0.5]$ and calculated the cumulative regret after 1000 plays. To avoid sampling variability we ran this simulation 50 times and found the average:
 
 \begin{figure}[H]
 \centering
@@ -159,7 +159,7 @@ We ran these three approaches on a dataset of $K=5$ machines with true reward di
 \caption{Cumulative Regret}
 \end{figure}
 
-As expected, the Explore strategy performs the worst. In this run, Adbandit performed the best. If we took the average of many runs, we'd expect Thompson-Sampling and Adbandit to perform similarly. Note that Adbandit finds the best machine very quickly and stays there. If $K$ was larger, then it would be more exploring, or potentially get stuck in a poorly performing machine for a long time before finding a better one. We expect Thompson-Sampling to outperform Adbandit for larger $K$.
+As expected, the Explore strategy performs the worst. Adbandit does the best early on, but then Thompson-Sampling ends up doing better. This is because of the amount of exploration in Thompson-Sampling which is slightly higher than Adbandit. In addition we ran it (not shown here) for $K=10$ and $K=20$ machines, and Thompson-Sampling does better, earlier on. This suggests that Adbandit's highly exploitative nature means it's more likely to get stuck in a suboptimal machine for longer.
 
 \subsection{$\epsilon$-greedy}
 
@@ -243,15 +243,15 @@ Assuming $K$ machines:
 	\end{enumerate}
 \end{enumerate}
 
-Below we run UCB1 on the same dataset as above:
+Below we run UCB1 on the same dataset as above. Note that this is only a comparison between machines, sampling variability isn't an issue like it would be if we compared UCB1 vs. $\epsilon$-greedy, for example.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{UCB_regret.png}
-\caption{Cumulative for all 5 machines}
+\caption{Cumulative regret for all 5 machines}
 \end{figure}
 
-Above we see that, as expected, Machine 5 has the lowest regret, since it has the highest $\theta$. 
+Above we see that, as expected, machine 5 has the lowest regret, since it has the highest $\theta$. It only takes a few iterations for UCB to find this. Additionally, as mentioned earlier the total cumulative regret growths logarithmically (e.g. if you add up the 5 machines). 
 
 \begin{figure}[H]
 \centering
@@ -259,7 +259,9 @@ Above we see that, as expected, Machine 5 has the lowest regret, since it has th
 \caption{Switching between machines}
 \end{figure}
 
-As expected, machine 5 is played the most often, even though the worse off machines are still being played. Separation from the other machines occurs around 60 iterations. Also note that even at 300 runs, there isn't much separation between machines 1 and 2, given how similar their $\theta$ is.
+As expected, machine 5 is played the most often, even though the worse off machines are still being played, in the tail. Separation from the other machines occurs around 60 iterations.\\
+
+Finally, we compute the total cumulative regret for all 5 machines on UCB1, for 1000 iterations, and average 30 simulations, and compare against the other approaches from earlier:
 
 \begin{figure}[H]
 \centering
@@ -267,8 +269,7 @@ As expected, machine 5 is played the most often, even though the worse off machi
 \caption{Comparing all 5 approaches}
 \end{figure}
 
-UCB1 does the worst in this particular run, compared to the other non-naive approaches. This suggests that while it provides nice theoretical guarantees, Bayesian heuristic approaches and even simple ones like $\epsilon$-greedy can outperform it.
-
+UCB1 performs the worst, other than random exploration. This is due to the nature of it's upper bounded-ness, suggesting that while UCB1 provides nice theoretical guarantees, Bayesian heuristic approaches and even simple ones like $\epsilon$-greedy can outperform it on average.
 
 \section{Continuous Reward}
 
