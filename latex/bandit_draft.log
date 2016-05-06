@@ -1,7 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  5 MAY 2016 23:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  6 MAY 2016 12:55
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **bandit_draft.tex
 (./bandit_draft.tex
@@ -807,46 +806,51 @@ Underfull \hbox (badness 10000) in paragraph at lines 295--296
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 305--306
+
+ []
+
 <Prob_Improvement.png, id=57, 561.09625pt x 415.5525pt>
 File: Prob_Improvement.png Graphic file (type png)
 
 <use Prob_Improvement.png>
-Package pdftex.def Info: Prob_Improvement.png used on input line 321.
+Package pdftex.def Info: Prob_Improvement.png used on input line 323.
 (pdftex.def)             Requested size: 224.43452pt x 166.21805pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 328--329
+Underfull \hbox (badness 10000) in paragraph at lines 330--331
 
  []
 
 <gp_plot1.png, id=58, 722.7pt x 361.35pt>
 File: gp_plot1.png Graphic file (type png)
  <use gp_plot1.png>
-Package pdftex.def Info: gp_plot1.png used on input line 334.
+Package pdftex.def Info: gp_plot1.png used on input line 336.
 (pdftex.def)             Requested size: 202.35675pt x 101.1773pt.
 
 <gp_plot2.png, id=59, 722.7pt x 361.35pt>
 File: gp_plot2.png Graphic file (type png)
  <use gp_plot2.png>
-Package pdftex.def Info: gp_plot2.png used on input line 340.
+Package pdftex.def Info: gp_plot2.png used on input line 342.
 (pdftex.def)             Requested size: 202.35675pt x 101.1773pt.
 
 <gp_plot3.png, id=60, 722.7pt x 361.35pt>
 File: gp_plot3.png Graphic file (type png)
  <use gp_plot3.png>
-Package pdftex.def Info: gp_plot3.png used on input line 346.
+Package pdftex.def Info: gp_plot3.png used on input line 348.
 (pdftex.def)             Requested size: 202.35675pt x 101.1773pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 354--355
+ [9 <./Prob_Improvement.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 356--357
 
  []
 
-[9 <./Prob_Improvement.png>] <reward_regret.png, id=65, 433.62pt x 289.08pt>
+<reward_regret.png, id=65, 433.62pt x 289.08pt>
 File: reward_regret.png Graphic file (type png)
-
-<use reward_regret.png>
-Package pdftex.def Info: reward_regret.png used on input line 360.
+ <use reward_regret.png>
+Package pdftex.def Info: reward_regret.png used on input line 362.
 (pdftex.def)             Requested size: 346.89647pt x 231.2643pt.
- [10 <./gp_plot1.png> <./gp_plot2.png> <./gp_plot3.png> <./reward_regret.png>] 
+
+[10 <./gp_plot1.png> <./gp_plot2.png> <./gp_plot3.png> <./reward_regret.png>]
 [11] (./bandit_draft.aux) ) 
 Here is how much of TeX's memory you used:
  6219 strings out of 493089
@@ -874,7 +878,7 @@ b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><
 /usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
 fb>
-Output written on bandit_draft.pdf (11 pages, 759094 bytes).
+Output written on bandit_draft.pdf (11 pages, 758903 bytes).
 PDF statistics:
  131 PDF objects out of 1000 (max. 8388607)
  78 compressed objects within 1 object stream
