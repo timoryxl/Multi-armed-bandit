@@ -179,7 +179,7 @@ As expected, the Explore strategy performs the worst. Adbandit does the best ear
 
 \subsection{$\epsilon$-greedy}
 
-The most simple approach to tackling the MAB problem is the $\epsilon$-greedy algorithm. As explained earlier, the greedy algorithm chooses the bandit with highest expected reward at every iteration. The problem with this purely exploitative approach is that it will take a large number of iterations to explore all the machines and converge onto the best machine. The $\epsilon$-greedy algorithm is almost a greedy algorithm as it generally exploits the best machine, however every once in a while it explores other machines.\\ 
+The most simple approach to tackling the MAB problem is the $\epsilon$-greedy algorithm. As explained earlier, the greedy algorithm chooses the bandit with highest expected reward at every iteration. The problem with this purely exploitative approach is that it may get stuck on a suboptimal machine. The $\epsilon$-greedy algorithm is almost a greedy algorithm as it generally exploits the best machine, however every once in a while it explores other machines.\\ 
 
 The value of $\epsilon$, defined by the user, controls the level of exploration and exploitation employed by the algorithm. The algorithm can be described as follows: For a proportion $1 - \epsilon$ of the trials, choose the machine with highest expected reward, and for a proportion of $\epsilon$ explore other machines with uniform probability.\\
 
