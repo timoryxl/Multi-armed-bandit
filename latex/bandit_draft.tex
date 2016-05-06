@@ -204,17 +204,16 @@ The $\epsilon$-decreasing algorithm consists of decreasing the value of $\epsilo
 
 CesaBianchi and Fisher (1998) found that $\epsilon$-decreasing algorithm is theoretically efficient (with respect to regret). However empirical studies by Vermorel and Mohri (2005) do not seem to find any significant improvements with the variants of the algorithm when compared to the original $\epsilon$-greedy algorithm.\\
 
+We run the  $\epsilon$-greedy algorithm on the dataset that we simulated
+
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{eps_greedy.png}
 \caption{Cumulative Regret}
 \end{figure}
 
-References
-Bandit algorithms for Website Optimization by J. White
-algorithms for the multi-armed bandit problem by V. Kuleshov and D. Precup
-Multi-armed Bandit algorithms and Empirical Evaluation M. Mohri and J. Vermorel
-Peter Auer, Nicolo Cesa-Bianchi, and Paul Fischer. Finite-time analysis of the multiarmed bandit problem. machine Learning, 47((2-3)), 2002.
+We find that the $\epsilon$-greedy algorithm performs better than the pure exploration and Adbandit startegies. It performs worse than Thompson Sampling, which is expected due to constant value of $\epsilon$. 
+
 
 \subsection{Upper Confidence Bounds}
 
@@ -368,7 +367,17 @@ We can see that in the first 10 iterations, the GP method is exploring high vari
 
 \section{Conclusion}
 
+In this paper, we explored discuss the multi-arm bandit problem. The problem essentially entails the exploration vs exploitation tradeoff, where one has to choose between maximizing current expected reward versus maximizing future expected rewards. Such situations arise in various application domains including clinical trials, stochastic scheduling and economics. Assumption that rewards are modeled using a bernoulli distribution, we discuss five strategies -  Exploration, Adbandit, Thompson Sampling, $\epsilon$-greedy and Upper Confidence Bounds that provide approximate solutions to the MAB problem. Using cummulative regret as a performance metric, we compared the algorithims and found the Thompson Sampling seems to perform the best, followed by $\epsilon$-greedy, Adbandit, Upper Confidence Bounds and  Exploration. We also describe a dynamic programming approach that provides a solution in simple cases \big(small trial sizes\big). Assuming the rewards are distributed using a continous Gaussian distribution, we also describe a solution utilizing Gaussian processes. 
+
 \section{References}
+
+\begin{enumerate}
+\item J. White, Bandit algorithms for Website Optimization
+\item Kuleshov and D. Precup, Algorithms for the multi-armed bandit problem
+\item M. Mohri and J. VermorelMulti-armed Bandit algorithms and Empirical Evaluation
+\item Peter Auer, Nicolo Cesa-Bianchi, and Paul Fischer. Finite-time analysis of the multiarmed bandit problem
+\item J. Chakravorty and A. Mahajan, Mutli-Arm Bandit, Gitten's Index and it Calculation
+\end{enumerate}
 
 
 \end{document}
