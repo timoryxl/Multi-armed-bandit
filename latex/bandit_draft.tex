@@ -14,7 +14,8 @@
 \usepackage{setspace}
 \setlength{\parindent}{0pt}
 
-\title{Multi-Armed Bandit Problem}
+\title{Multi-Armed Bandit Problem\\
+STA 531 Final Project}
 \author{Sunith Suresh, Lin Xiao, Ilan Man and Sanjay Hariharan}
 \date{\today} 
 \begin{document}
@@ -22,90 +23,78 @@
 
 \section{Introduction}
 
-This paper explores the multi-armed bandit problem (MAB). A multi-armed bandit is a sequential experiment with the goal of achieving the largest possible reward from a payoff distribution with unknown parameters. The term multi-armed bandit comes from slot machines where each machine is known as a one-armed bandit. In this set up, at each iteration the player must decide which arm of the experiment to observe next.\\
+This paper explores the multi-armed bandit problem (MAB). A multi-armed bandit is a sequential experiment with the goal of achieving the largest possible reward from a payoff distribution with unknown parameters. The term multi-armed bandit comes from slot machines where each machine is known as a one-armed bandit. In this set up, at each iteration the player must decide which of the arms to play next.\\
 
 The task is complicated by the stochastic nature of the bandits in the following two ways:
 
 \begin{enumerate}
 \item A suboptimal bandit can return many winnings, purely by chance, which would make us believe that it is a very profitable bandit. Similarly, the best bandit might not yield a reward if only played a few times.
-\item If we have found a bandit that returns good results, do we keep drawing from it to maintain our good score, or do we try other bandits in hopes of finding an even better bandit? How do we know when to switch and when to stick to the current bandit? This is known as the \textit{exploration vs. exploitation} dilemma.
+\item If we have found a bandit that returns good results, do we keep drawing from it to maintain our good score, or do we try other bandits in hopes of finding an even better bandit? How do we know when to switch and when to stick to the current bandit? This is known as the \textit{exploration vs. exploitation} tradeoff.
 \end{enumerate}
 
-This is a classic reinforcement learning problem in machine learning literature, as well as a game theoritic problem in economic theory.\\
+This is a classic reinforcement learning problem in machine learning literature and game theory.\\
 
-This paper reviews several strategies for selecting machines, including a creative application of dynamic programming. Note that there are many variations on the stochastic MAB, including contextual bandit and adverserial bandit, which we will not discuss here and is outside of the scope of this paper. 
+This paper reviews several strategies for selecting bandits, including a creative application of dynamic programming. Note that there are many variations of the stochastic MAB, including contextual bandit and adversarial bandit, which we will not discuss here and is outside of the scope of this paper. 
 
 \section{Multi-armed Bandits}
 
-In machine learning literature, the stochastic multi-armed bandit problem is formulated as:
+In machine learning literature, the stochastic multi-armed bandit problem is formulated as follows:
 
 \begin{quote}
-Given $K$ machines, each with an unknown probability of yielding a reward, which come from a fixed but unknown distribution parameterized by $\theta_i$, for $i \in (1, ..., K)$, and $N$ total plays, decide which machines to play in order to maximize the total reward.
+Given $K$ machines, each with an unknown probability of yielding a reward, which come from a fixed but unknown distribution parameterized by $\theta_i$, for $i \in (1, ..., K)$, and $N$ total plays, decide which machines to play in order to maximize the total reward. The process by which we make a decision is known as the policy.
 \end{quote}
 
-\subsection{Reget vs. Reward}
 
-It is common in the literature to express the maximum reward as minimzing \textit{regret} compared to the best arm in hindsight, acting as a sort of opportunity cost. That is, define regret at each step as $r_{t} = R^*_{t} - R_{t,i}$, where $R^*$ is the reward yielded by selecting the best machine and $R_{t,i}$ is the reward yielded by selecting machine $i$ at time $t$. Note that in reality we don't know what the best machine is - this formulation is purely a way to compare the performance of algorithms with simulated data. The goal is then to devise a strategy to minimize $\sum_{t=1}^N r_{t}$. Note that since this is a stochastic problem, we aim to minimize regret in expectation or with high probability.\\
+
+\subsection{Regret vs. Reward}
+
+It is common in the literature to express the maximum reward as minimizing \textit{regret} compared to the best arm in hindsight, like an opportunity cost. That is, define regret at each step as $c_{t} = R^*_{t} - R_{t,i}$, where $R^*$ is the reward yielded by selecting the best machine and $R_{t,i}$ is the reward yielded by selecting machine $i$ at time $t$. Note that in reality we don't know what the best machine is - this formulation is purely a way to compare the performance of algorithms using simulated data. The goal is then to devise a strategy to minimize $\sum_{t=1}^N c_{t}$. Note that since this is a stochastic problem, we aim to minimize expected regret.\\
 
 \subsection{Exploitation vs. Exploration}
 
-The tension between playing all the machines many times and only playing the best machine is a key concern for optimizing an algorithm. The problem with exploring too much is that every time you play a machine that isn't the best, you incur some regret, since you won't be playing a machine with highest expected reward. In addition, if you view machines as, for example, websites that users click on, then every time you send users to a bad website, you risk losing them forever, if they have a very unfavorable experience. On the other hand, if you exploit too quickly, then you won't have explored the space of possible machines and may miss out on the most optimal machine. This could be very costly, especially if you don't change your mind later on - you will always incur some cost in the form of the regret function.\\
+The tradeoff between playing all the machines many times and only playing the best machine is a key concern for optimizing an algorithm. The problem with exploring too much is that every time you play a machine that isn't the best, you incur some regret, since you won't be playing a machine with highest expected reward. On the other hand, if you exploit too quickly, then you won't have explored the entire space of machines and may miss out on the most optimal machine. This could be very costly, especially if you don't change your mind later on - you will always incur some cost in the form of the regret.\\
 
 \section{Bayesian approaches: Bernoulli Bandit}
 
-A popular approach to solving the MAB problem is to minimize regret using Bayesian inference. Specifically, assume that rewards are distributed as a Bernoulli with some latent parameter, $\theta_i$, specific to each machine. In addition, we can put a prior distribution on $\theta_i$ and update our belief about it as we run the algorithm and learn which machines are better than others. Since rewards are generated from a Bernoulli distribution, a natural choice for the distribution on $\theta_i$ is a Beta. Formally stated:
+A popular approach to solving the MAB problem is to minimize regret using Bayesian inference. Specifically, assume that rewards are distributed as a Bernoulli random variable with some latent parameter, $\theta_i$, specific to each machine. In addition, we can put a prior distribution on $\theta_i$ and update our belief about it as we run the algorithm and learn which machines are better than others. Since rewards are generated from a Bernoulli distribution, a natural choice for the distribution on $\theta_i$ is a Beta. Formally stated:
 
 $$\theta_i \sim \text{Beta}(\alpha_i, \beta_i)$$
 $$r_i = \text{Reward from machine i} \sim \text{Bernoulli}(\theta_i)$$
 
 Exploiting the conjugacy of the Beta-Bernoulli model, the posterior distribution of getting a reward from $\text{machine}_i$, after playing for $N$ iterations is:
-$$\text{Beta}(\alpha_i + R_{N}, \beta_i + T - R_{N})$$
+$$\text{Beta}(\alpha_i + R_{N}, \beta_i + N - R_{N})$$
 
 where $R_{N} = \sum_{t=1}^{N}r_{t}$.\\
 
-Before beginning to play, we assume no prior knowledge about any machine's propensity to yield a positive reward. Therefore, we initially set $\alpha_i, \beta_i = 1$, which is a common objective prior for the Beta distribution.\\
+Before beginning to play, we assume no prior knowledge about any machine's propensity to yield a reward. Therefore, we initially set $\alpha_i, \beta_i = 1$, which is a common objective prior for the Beta distribution.\\
 
 \subsection{Dynamic Programming}
 
 As mentioned above, our goal is to either minimize regret or maximize total expected rewards, $\mathbb{E}(R_N)$. Under the above setup, we constructed an approach to maximizing future expected rewards based on a backwards, dynamic programming scheme. Note that we derive the algorithm assuming $K = 2$ machines.\\
 
-Before we discuss how to construct our acquisition function $U(\theta|X)$ which will help us decide which machine to play at each iteration, we note the following interesting observations:
+\textbf{Backwards algorithm}
+
 
 \begin{enumerate}
-\item At time $T = 1$, we have no prior belief concerning any machine. Thus, it will not matter which machine we pick the first time around, though it will influence all subsequent choices.
 \item At time $T = N$, we are at our final trial, and thus are only concerned with the reward on this trial. As such, we opt for a \textbf{greedy} approach and pick the machine with the highest expected reward. Using a Beta posterior, that is:  $\underset{i}{\text{argmax}}(\frac{\alpha_1}{\alpha_1 + \beta_1}, \frac{\alpha_2}{\alpha_2 + \beta_2}$)
-\item For times $T = 2, ..., N-1$, we must choose the machine based on the expected sum of future rewards, based on our framework above: $\mathbb{E}(\displaystyle\sum_{i=1}^{N} r_i)$
-\item In general, at time $T = t$, $\mathbb{E}(\displaystyle\sum_{i=t}^{N} R_i|M_{1:t-1}, R_{1:t-1})$ = $\mathbb{E}(\displaystyle\sum_{i=t+1}^{N} R_i|\theta)$ + $\mathbb{E}(R_t|\theta)$ 
+
+\item For $T = N-1,N-2,..., 1$:
 	\begin{itemize}
+	\item Given that we know the most optimal choice for the last trial, we select the machine on this trial that will give us the maximum expected sum of future rewards
+	\item $\mathbb{E}(\displaystyle\sum_{i=T}^{N} R_i|M_{1:T-1}, R_{1:T-1})$ = $\mathbb{E}(\displaystyle\sum_{i=T+1}^{N} R_i|\theta)$ + $\mathbb{E}(R_T|\theta)$ 
+	
+\begin{itemize}
 	\item $M_{1:t}$ = machines chosen from times $1, ..., t$ 
 	\item $R_{1:t}$ = rewards given from times $1, ..., t$
 	\end{itemize}
+
+	\end{itemize}
+
 \end{enumerate}
 
-Given we perform $N$ trials, we construct our algorithm in a backwards fashion:
 
-\begin{enumerate}
-\item For $T = N$:
-	\begin{itemize}
-	\item For each node, we choose the greedy, i.e. the one with the maximum expected reward.
-	\end{itemize}
-\item For $T = N-1$:
-	\begin{itemize}
-	\item Given that we know the most optimal choice for the last trial, we select the machine on this trial that will give us the maximum expected sum of future rewards
-	\item $\mathbb{E}(R_{N-1} + R_{N})$, and we know $R_N$ from the previous iteration
-	\end{itemize}
-\item For $T = N-2,..., 2$:
-	\begin{itemize}
-	\item We follow similar intuition as above, choosing the most optimal choice for the maximum expected sum of future rewards, given the optimal choice for all subseqent trials already calculated
-	\item $\mathbb{E}(\displaystyle\sum_{i=T}^{N} R_i)$ = $\mathbb{E}(\displaystyle\sum_{i=t+1}^{N} R_i)$ + $\mathbb{E}(R_t)$
-	\end{itemize}
-\item For $T = 1$:
-	\begin{itemize}
-	\item As mentioned above since the first iteration will not influence our decision, as we have no prior knowledge, we select any machine at random.
-	\end{itemize}
-\end{enumerate}
 
-As an illustration, consider the following tree. Here we denote $f(\alpha_1, \beta_1, \alpha_2, \beta_2)$ as the posterior parameters of the machine at time $T$. Note that $f$ here is a general utility function that determines which Machine to play at the given stage. It takes in the updated parameters for each machine. Machine 1 has parameters $\alpha_1$ and $\beta_1$, and Machine 2 has parameters $\alpha_2$ and $\beta_2$. Once a machine is selected, we play the Machine, and in our Bernoulli setup, are given a reward or no reward. We then move down the branch accordingly, based on the Machine we chose, and update the $\alpha$ or $\beta$ parameter depending on the outcome.
+As an illustration, consider the following tree. Here we denote $f(\alpha_1, \beta_1, \alpha_2, \beta_2)$ as the posterior parameters of the machine at time $T$. Note that $f$ here is a general utility function that determines which machine to play at the given time. It is a function of the parameters for each machine. Machine 1 has parameters $\alpha_1$ and $\beta_1$, and machine 2 has parameters $\alpha_2$ and $\beta_2$. Once our utility function selects a machine, we play that machine, and in our Bernoulli setup, are given either reward or no reward. We then move down the branch accordingly, based on the machine we chose, and update the $\alpha$ or $\beta$ parameter depending on the outcome.
 
 \begin{figure}[H]
 \centering
@@ -113,7 +102,7 @@ As an illustration, consider the following tree. Here we denote $f(\alpha_1, \be
 \caption{Forest of Possible Outcomes}
 \end{figure}
 
-As time increases, the complexity of possible branches increase exponentially, but it is important to note that some branches merge back together. Visually, our algorithm takes in two pieces of information:
+As time increases, the complexity of possible branches increase exponentially, but it is important to note that some branches merge back together. Our algorithm requires two pieces of information:
 
 \begin{enumerate}
 \item Current parameters of the machine based on previous observations
@@ -122,55 +111,63 @@ As time increases, the complexity of possible branches increase exponentially, b
 
 Our algorithm creates a tree of all possible future states, like above, and dynamically works backwards, assuming at the final stage we want to be completely greedy (since it is our last trial). The output of the algorithm is \textbf{the specific machine we should play at the current stage}, as well as the expected sum of rewards given you follow the algorithm at each trial.\\
 
-Initially, we assumed this algorithm would output the greedy choice at every stage. By our definition, the greedy choice is the one with the highest expected return, or the Machine with the highest value for $\frac{\alpha}{\alpha + \beta}$. However, upon implementing the algorithm, it proved otherwise! It correctly generates the full tree of possible states, and works backward to select the best choice given all possible future states.
+This algorithm does not choose the greedy approach at each stage.
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{rlllllll}
   \hline
- & $\alpha_1$ & $\beta_1$ & $\alpha_2$ & $\beta_2$ & Greedy & Dynamic Programming & Expected Reward \\ 
+ Simulation & $\alpha_1$ & $\beta_1$ & $\alpha_2$ & $\beta_2$ & Greedy & Dynamic Programming & Expected Reward \\ 
   \hline
-   & 2 & 1 & 1 & 1 & Machine 1 & Machine 1 & 5.75 \\ 
-   & 1 & 1 & 2 & 1 & Machine 2 & Machine 2 & 5.75 \\ 
-   & 3 & 4 & 1 & 1 & Machine 2 & Machine 1 & 5.26 \\ 
-   & 2 & 2 & 5 & 6 & Machine 1 & Machine 2 & 5.15 \\ 
-   & 5 & 5 & 6 & 6 & N/A & Machine 1 & 5.05 \\ 
+   1 & 2 & 1 & 1 & 1 & Machine 1 & Machine 1 & 5.75 \\ 
+   2 & 1 & 1 & 2 & 1 & Machine 2 & Machine 2 & 5.75 \\ 
+   3 & 3 & 4 & 1 & 1 & Machine 2 & Machine 1 & 5.26 \\ 
+   4 & 2 & 2 & 5 & 6 & Machine 1 & Machine 2 & 5.15 \\ 
+   5 & 5 & 5 & 6 & 6 & N/A & Machine 1 & 5.05 \\ 
    \hline
 \end{tabular}
+\caption{Simulation Results for 5 Inputs}
 \end{table}
 
-The above table of simulations, given several possible parameter inputs, and $N=3$ for each turn. The first two rows are trivial, as the Greedy and Dynamic approach both pick the Machine with the highest Expected Reward. The next two show a marked change. In the 3rd simulation, the Greedy algorithm would choose Machine 2, as its Expected Reward is $\frac{1}{2}$, but based on the possible consequences of choosing that branch, it opts for the safer choice, Machine 1. The 4th simulation is similar, where our algorithm chooses the safer choice, ie: the one with more data points and less chance of having a poor path. The final simulation reflects this result as well, as both Machines have an identical expected reward, so our Greedy Algorithm will not care which one we pick, but our algorithm prefers the one with more data.
+Note the following observations:
 
-Note that our algorithm dynamically updates our Machine parameters based on rewards, but we did not define any latent parameters for our Machines. Next, we will explore other algorithms, and compare each one's effectiveness based on Bandits with 'true' parameters.
+\begin{enumerate}
+\item The first two rows are trivial, as the greedy and dynamic approach both pick the machine with the highest expected reward. 
+\item In the 3rd simulation, the greedy algorithm would choose machine 2, as its expected reward is $\frac{1}{2}$, but based on the possible consequences of choosing that branch, it opts for the safer choice, machine 1. 
+\item The 4th simulation is similar, where our algorithm chooses the safer choice, i.e. the one with more data points and less chance of having a poor path. 
+\item The final simulation reflects this result as well, as both machines have an identical expected reward, so the greedy algorithm will not care which one we pick, but our algorithm prefers the one with more data.
+\end{enumerate}
+
+Our algorithm dynamically updates our machine parameters based on rewards, but we did not define any latent parameters for our machines. Next, we will explore other algorithms, and compare each one's effectiveness based on bandits with 'true' parameters.
 
 \subsection{Thompson Sampling}
 
-As mentioned in the algorithm above, our approach to solving the MAB problem is inherently Bayesian. Below we outline a popular approach used in practice called Thompson Sampling, which relies on Bayesian mechanics. The general algorithm is as follows:
+As mentioned in the algorithm above, our approach to solving the MAB problem is inherently Bayesian. Below we outline a popular Bayesian approach used in practice called Thompson Sampling
 
 \begin{enumerate}
 \item For $t = 1, ..., N$
 	\begin{enumerate}
-	\item $U(\alpha_i$, $\beta_i) = i$  // select machine $i$ at time $t$ using the acquisition function
+	\item $f(\alpha_i$, $\beta_i) = i$  // select machine $i$ at time $t$ using the policy function
 	\item $r_t \sim \text{Bernoulli}(\theta_{i})$   // We play machine $i$, and observe reward $r_t$
 	\begin{itemize}
 		\item If $r_t = 1: \alpha_i = \alpha_i + 1$   // increase our positive belief in machine $i$
-		\item else if $r_t = 0: \beta_i = \beta_i + 1$  // increase our negative belief (i.e. failure) in machine $i$
+		\item else if $r_t = 0: \beta_i = \beta_i + 1$  // increase our negative belief in machine $i$
 	\end{itemize}
 	\item $R_t = R_t + r_t$		// add reward at time $t$ to running total
 	\end{enumerate}
 \end{enumerate}
 
-This algorithm provides a framework for how to think about this problem in a Bayesian way. To maximize expected rewards, we must optimally choose the policy function $U$.\\
+This algorithm provides a framework for how to think about this problem in a Bayesian way. To maximize expected rewards, we must optimally choose the policy function $f$.\\
 
-Below we review 3 ways to select the policy, $U$:
+Below we review 3 ways to select $f$:
 
 \begin{enumerate}
 \item \textbf{Explore}: Randomly select one of the $K$ machines, without considering how many win/losses we've seen. This is a pure exploratory strategy and is used for comparison purposes only. In reality no one would choose this approach.
-\item \textbf{Exploit}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\mathbb{E}[\theta_i]$. This is called exploit because we are greedily choosing the best machine at each step based on expected rewards. Note however that even if we select the best expected machine, there is a probability of $\frac{\beta_i}{\alpha_i + \beta_i}$ that it fails to generate a reward. So the amount of exploration is much less than above but still non-zero. That this approach is known as \textit{Adbandit}.
-\item \textbf{Thompson-Sampling}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\theta_i$. This approach falls somewhere between Exploit and Explore, but is much closer to Exploit. In expectation we expect Thompson-Sampling to be very close to Exploit.
+\item \textbf{Exploit}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\mathbb{E}[\theta_i]$. This is called exploit because we are greedily choosing the best machine at each step based on expected rewards. Note however that even if we select the best expected machine, there is a probability of $\frac{\beta_i}{\alpha_i + \beta_i}$ that it fails to generate a reward. So the amount of exploration is much less than above but still non-zero. Note that this approach is known as \textit{Adbandit}.
+\item \textbf{Thompson-Sampling}: Sample each $\theta_i \sim Beta(\alpha_i, \beta_i)$. Select $\underset{i}{\text{argmax}}\text{ }\theta_i$. This approach falls somewhere between Exploit and Explore, but is much closer to Exploit. 
 \end{enumerate}
 
-We ran these three approaches on a dataset of $K=5$ machines with true reward distribution, $\theta = [0.05,0.1,0.3,0.2,0.5]$ and calculated the cumulative regret after 1000 plays. To avoid sampling variability we ran this simulation 50 times and found the average:
+We ran these three approaches on a dataset of $K=5$ machines with true reward distribution, $\theta = [0.05,0.1,0.3,0.2,0.5]$ and calculated the cumulative regret after 1000 plays. To avoid sampling variability we ran this simulation 50 times and took the average:
 
 \begin{figure}[H]
 \centering
@@ -182,29 +179,29 @@ As expected, the Explore strategy performs the worst. Adbandit does the best ear
 
 \subsection{$\epsilon$-greedy}
 
-The most simple approach to tackling the MAB problem is the $\epsilon$-greedy algorithm. As explained earlier, the greedy algorithm always takes the best action at every trial. In other words, it simply chooses the bandit with highest expected reward at every iteration. The problem with this purely exploitative approach is that, it will take a large number of iteration to explore all the machines and converge onto the best machine. The $\epsilon$-greedy algorithm is almost a greedy algorithm as it generally exploits the best machine, however every once in a while it explores other machines.\\ 
+The most simple approach to tackling the MAB problem is the $\epsilon$-greedy algorithm. As explained earlier, the greedy algorithm chooses the bandit with highest expected reward at every iteration. The problem with this purely exploitative approach is that it will take a large number of iterations to explore all the machines and converge onto the best machine. The $\epsilon$-greedy algorithm is almost a greedy algorithm as it generally exploits the best machine, however every once in a while it explores other machines.\\ 
 
-The parameter $\epsilon$ controls the percentage of iterations for which the algorithm explores machines. The algorithm can be described as follows: For a proportion $1 - \epsilon$ of the trials, choose the best machine(i.e the machine with highest expected reward), and for a proportion of $\epsilon$ explore other machines (with uniform probability).\\
+The value of $\epsilon$, defined by the user, controls the level of exploration and exploitation employed by the algorithm. The algorithm can be described as follows: For a proportion $1 - \epsilon$ of the trials, choose the machine with highest expected reward, and for a proportion of $\epsilon$ explore other machines with uniform probability.\\
 
-Given machines $\{1,...,K\}$ with initial empirical means $\{\hat{\mu_1(0)},...,\hat{\mu_K(0)}\}$ For trials $t = \{1,...,N\}$, the probability of choosing machine $i$ is given by
+Given machines $\{1,...,K\}$ with initial empirical means $\{\hat{\mu}_1(0),...,\hat{\mu}_K(0)\}$ For trials $t = \{1,...,N\}$, the probability of choosing machine $i$ is given by
 
 $$p_i(t+1) = \begin{cases}
-  1- \epsilon + \frac{\epsilon}{K}, & \text{if } i = argmax_{j=1,..,K}\hat{\mu_j(t)}, \\
+  1- \epsilon + \frac{\epsilon}{K}, & \text{if } i = argmax_{j=1,..,K}\hat{\mu}_j(t), \\
   \frac{\epsilon}{K}, & \text{otherwise}.
 \end{cases}$$
 
 
-It follows from the algorithm that if $\epsilon = 0$, the algorithm reduces to a purely exploitative one, whereas if $\epsilon = 1$, it reduces to a purely explorative one. Therefore the value of $\epsilon$, defined by the user, controls the level of exploration and exploitation employed by the algorithm.\\
+It follows from the algorithm that if $\epsilon = 0$, the algorithm reduces to a purely exploitative one, whereas if $\epsilon = 1$, it reduces to a purely explorative one. \\
 
 The $\epsilon$-greedy algorithm is considered to be suboptimal due to the constant value of $\epsilon$. As the number of trials increase, asymptotically we can be reasonably certain as to which machine is the best machine from the observed rewards. However, the algorithm will always explore for $\epsilon$ percent of the trials. To address this issue, variants of the algorithm have been proposed. Two popular variants are known as $\epsilon$-first algorithm and $\epsilon$-decreasing algorithm.\\
 
 The $\epsilon$-first algorithm consists of doing the exploration all at once at the beginning and then switching to pure exploitation. Given $N$ total trials, for $\epsilon N$ trials, the machines are randomly chosen (with uniform probability). After the exploration phase, for the remaing $\big( 1-\epsilon \big) N$ trials, the algorithm switches to pure exploitation, choosing the machine with highest expected rewards.\\
 
-The $\epsilon$-decreasing algorithm consists of decreasing the value of $\epsilon$ with number of trials. The algorithm progresses from highly explorative approach in the beginning to a highly exploitative one towards the end.\\
+The $\epsilon$-decreasing algorithm consists of decreasing the value of $\epsilon$ with number of trials. The algorithm progresses from a highly explorative approach in the beginning to a highly exploitative one towards the end.\\
 
 CesaBianchi and Fisher (1998) found that $\epsilon$-decreasing algorithm is theoretically efficient (with respect to regret). However empirical studies by Vermorel and Mohri (2005) do not seem to find any significant improvements with the variants of the algorithm when compared to the original $\epsilon$-greedy algorithm.\\
 
-We run the  $\epsilon$-greedy algorithm on the dataset that we simulated
+We ran the $\epsilon$-greedy algorithm, with $\epsilon$ set to 0.1, which is often used as a standard baseline measure, on the dataset that we simulated:
 
 \begin{figure}[H]
 \centering
@@ -212,12 +209,12 @@ We run the  $\epsilon$-greedy algorithm on the dataset that we simulated
 \caption{Cumulative Regret}
 \end{figure}
 
-We find that the $\epsilon$-greedy algorithm performs better than the pure exploration and Adbandit startegies. It performs worse than Thompson Sampling, which is expected due to constant value of $\epsilon$. 
+We find that the $\epsilon$-greedy algorithm performs better than the pure exploration and Adbandit strategies. It performs worse than Thompson Sampling, which is expected due to constant value of $\epsilon$. $\epsilon$ is usually chosen by the user based on the specific nature of the problem.
 
 
 \subsection{Upper Confidence Bounds}
 
-The other algorithms presented in this paper are similar in that they pay attention only to how much reward they’ve gotten from the machines. This means that they're likely to under-explore options whose initial experiences were not rewarding, even though they may not have enough data to be confident about those arms. One naive approach to solving this problem is to run the algorithm multiple times and take the average of the results. Another could be to run the algorithm for a very long time and hope the probabilistic nature will eventually correct for random variation in the reward distribution. Another approach is to use probability theory to bound our confidence in how good or bad each machine is. This is exactly what Upper Confidence Bounds does.\\
+The other algorithms presented in this paper are similar in that they pay attention only to how much reward they've gotten from the machines. This means that they're likely to under-explore options whose initial experiences were not rewarding, even though they may not have enough data to be \textit{confident} about those arms. One naive approach to solving this problem is to run the algorithm multiple times and take the average of the results. Another could be to run the algorithm for a very long time and hope the probabilistic nature will eventually correct for random variation in the reward distribution. Yet another approach is to use probability theory to bound our confidence in how good or bad each machine is. This is exactly what Upper Confidence Bounds does.\\
 
 The upper confidence bound (UCB) family of algorithms selects the machine with the largest upper confidence bound at each round. This paper will only focus on UCB1, but note that there are many variants of the UCB family. The more times you play a machine, the tighter the confidence bounds become. So as the number of plays for each machine increases, the uncertainty decreases, and so does the width of the confidence bound.\\
 
@@ -230,7 +227,7 @@ Where $\bar{\mu_{i}}$ is the average reward obtained from machine $i$ and $n_i$ 
 This upper bound is the sum of two terms, where:
 
 \begin{enumerate}
-\item the first term is the average reward
+\item the first term is the average empirical reward
 \item the second term is related to the one-sided confidence interval for the average reward according to the Chernoff-Hoeffding bounds
 \end{enumerate}
 
@@ -238,9 +235,9 @@ Recall that since rewards follow a Bernoulli distribution, we can apply Chernoff
 
 $$\displaystyle \textup{P}(Y + a < \mu) \leq e^{-2na^2}$$
 
-This confidence bound grows with the total number of actions we have taken but shrinks with the number of times we have tried this particular action. This ensures each action is tried infinitely often but still balances exploration and exploitation. It can be shown that the regret for UCB1 grows with \textbf{ln n}, as witnessed below for the optimal machine.\\
+This confidence bound grows with the total number of actions we have taken but shrinks with the number of times we have tried any particular action. This ensures that each action is tried infinitely often but still balances exploration and exploitation. It can be shown that the regret for UCB1 grows with \textbf{ln(n)}, as witnessed below for the optimal machine.\\
 
-Note that in addition to keeping track of our confidence in the estimated values of each machine, the UCB algorithm doesn’t use randomness at all. Unlike the other algorithms in this paper (and in the literature) it’s possible to know exactly how UCB will behave in any given situation. This can make it easier to reason about at times.
+Note that in addition to keeping track of our confidence in the estimated values of each machine, the UCB algorithm doesn't use randomness at all. Unlike the other algorithms in this paper, it's possible to know exactly how UCB will behave in any given situation. This can make it easier to reason about at times.
 
 \subsubsection{UCB1: algorithm}
 
@@ -253,15 +250,15 @@ Assuming $K$ machines:
 \item set $\bar{\mu_{i}} = \frac{r_i}{n_i}$
 \item For time $t = K+1, ..., N$:
 	\begin{enumerate}
-		\item Play arm $\hat{i} = \underset{i}{\text{argmax}}\text{ }(\hat{\mu_{i}} + \sqrt{\frac{2 ln (t)}{n_i}})$
+		\item Play arm $\hat{i} = \underset{i}{\text{argmax}}\text{ }(\bar{\mu_{i}} + \sqrt{\frac{2 ln (t)}{n_i}})$
 		\item Observe reward $r$
 		\item $r_{\hat{i}} = r_{\hat{i}} + r$
 		\item $n_{\hat{i}} = n_{\hat{i}} + 1$
-		\item update $\hat{\mu_{i}} = \frac{r_{\hat{i}}}{n_{\hat{i}}}$
+		\item update $\bar{\mu_{i}} = \frac{r_{\hat{i}}}{n_{\hat{i}}}$
 	\end{enumerate}
 \end{enumerate}
 
-Below we run UCB1 on the same dataset as above. Note that this is only a comparison between machines, sampling variability isn't an issue like it would be if we compared UCB1 vs. $\epsilon$-greedy, for example.
+Below we ran UCB1 on the same dataset as above. Note that since this is only a comparison between machines, sampling variability isn't an issue like it would be if we compared UCB1 vs. $\epsilon$-greedy, for example.
 
 \begin{figure}[H]
 \centering
@@ -269,7 +266,7 @@ Below we run UCB1 on the same dataset as above. Note that this is only a compari
 \caption{Cumulative regret for all 5 machines}
 \end{figure}
 
-Above we see that, as expected, machine 5 has the lowest regret, since it has the highest $\theta$. It only takes a few iterations for UCB to find this. Additionally, as mentioned earlier the total cumulative regret growths logarithmically (e.g. if you add up the 5 machines). 
+Above we see that, as expected, machine 5 has the lowest regret, since it has the highest $\theta$. It only takes a few iterations for UCB to find this. Additionally, as mentioned earlier the total cumulative regret grows logarithmically. 
 
 \begin{figure}[H]
 \centering
@@ -279,7 +276,7 @@ Above we see that, as expected, machine 5 has the lowest regret, since it has th
 
 As expected, machine 5 is played the most often, even though the worse off machines are still being played, in the tail. Separation from the other machines occurs around 60 iterations.\\
 
-Finally, we compute the total cumulative regret for all 5 machines on UCB1, for 1000 iterations, and average 30 simulations, and compare against the other approaches from earlier:
+Finally, we compute the total cumulative regret for all 5 machines on UCB1, for 1000 iterations, and average 50 simulations, and compare against the other approaches from earlier:
 
 \begin{figure}[H]
 \centering
@@ -293,29 +290,31 @@ UCB1 performs the worst, other than random exploration. This is due to the natur
 
 \subsection{Gaussian Processes}
 
-We generalize our scheme to accomodate continuous rewards rather than Bernoulli. This scenario may be more intuitive in a slot machine or A/B testing analogy, where rewards may be continuous with respect to the dollars earned or lost. All methods we employ above, such as Epsilon Greedy, Thompson Sampling, Dynamic Programming, and UCB, can be easily applied to this continuous framework, but we present an interesting alternative method.\\
+While the methods we employed above can be easily applied to a continuous reward framework, in this section we outline an alternative method. This scenario may be more intuitive in a slot machine or A/B testing analogy, where rewards may be continuous with respect to the dollars earned or lost.\\
 
-We model our reward function as a Gaussian Process (GP), specified by its mean and covariance function. We optimize an unknown reward function $f$. During each time step $t = 1,...,T$, a Machine $x$ is chosen at random and sampled for a noisy observation of the underlying reward function. More simply, we sample a reward from the latent reward function with added Gaussian noise.\\
+We model our reward function as a Gaussian Processes (GP), specified by its mean and covariance function. We optimize an unknown reward function $f$. During each time step $t = 1,...,N$, a machine $i$ is chosen and a reward is sampled from $f$ with added Gaussian noise.\\
 
 \subsection{Prediction}
 
-Assuming that the reward function is a sample from GP(0, k(x,x)) (as our prior), we can find the mean and covariance of the posterior predictive distribution as follows:
+Using a reward function sampled from GP(0, k(x,x)) as our prior, we find the mean and covariance of the posterior predictive distribution as follows:
 
 $$P(y_{t+1} | D_{1:t}, x_{t+1}) = N(\mu_t(x_{t+1}), \sigma_t^2(x_{t+1}) + \sigma_{noise}^2)$$
 $$\mu_t(x_{t+1}) = k^T[K + \sigma_{noise}^2I]^{-1}y_{1:t}$$
 $$\sigma_t^2(x_{t+1}) = k(x_{t+1}, x_{t+1}) - k^T[K + \sigma_{noise}^2I]^{-1}k$$
 
-We should choose the next point x where the mean is high (exploitation) and the variance is high (exploration).
+In order to balance the tradeoff between exploitation and exploration , we should choose the next point to be either where the mean is high (exploitation) or the variance is high (exploration).
 
-We balance this tradeoff by choosing an **acquisition function**, which guides the optimization by determining which $x_{t+1}$ to observe next.
+The process above is our policy, also known as acquisition function, which guides the optimization by determining which $x_{t+1}$ to observe next.
 
 \subsection{Acquisition Function}
 
 \subsubsection{Probability of Improvement (PI)}
 
-$PI(x) = p(f(x) \geq \mu^+ + \xi)$ = $\Phi(\frac{\mu(x) - \mu^+ - \xi}{\sigma(x)})$
-- $\mu^+$ : The highest value of all the observed values so far\\
-- $\xi$ : Tuning parameter to adjust exploration vs. exploitation. We adjust the tuning parameters with a different number of machines to test efficiency.
+$$PI(x) = p(f(x) \geq \mu^+ + \xi) = \Phi(\frac{\mu(x) - \mu^+ - \xi}{\sigma(x)})$$\\
+$\mu^+$ : The highest value of all the observed values so far\\
+$\xi$ : Tuning parameter to adjust exploration vs. exploitation. 
+
+The figure below demonstrates our acquisition function. At each value, the posterior predictive function has a mean and variance, computed using the above formula. We construct a Normal CDF using the mean and variance for each value, and evaluate the CDF at the highest observed value. This result is known as the Probability of Improvement, and at each iteration we select the value with the highest calculated Probability.
 
 \begin{figure}[H]
 \centering
@@ -323,11 +322,10 @@ $PI(x) = p(f(x) \geq \mu^+ + \xi)$ = $\Phi(\frac{\mu(x) - \mu^+ - \xi}{\sigma(x)
 \caption{Probability of Improvement (PI)}
 \end{figure}
 
-The figure above demonstrates our acquisition function. We determine the probability of improvement as the CDF of the Prediction function evaluated at the highest observed value.
 
 \subsection{Empirical Results}
 
-We analyze our Gaussian Process scenario over a large number of Machines in a continuous reward setup, creating a latent reward function and sampling observations based on the function. Note that as the number of iterations increase, our GP closer resembles the 'true' reward function, and ultimately the utility function chooses the best point every time.\\
+Below we provide output for the GP model, run on 10,000 machines, at iterations 1, 15, and 30. Note that as the number of iterations increase, the GP closer resembles the true reward function. Once the best machine is chosen, the algorithm will continue selecting this machine.\\
 
 \begin{figure}
 \centering
@@ -353,7 +351,7 @@ We analyze our Gaussian Process scenario over a large number of Machines in a co
 \label{fig:test}
 \end{figure}
 
-In Figure 6, the latent reward function is also plotted, and we can see that over time, our observed values tend to cluster close to the highest point (ie: the best machine), and the overall fit matching close to the true function.
+In Figure 6, the latent reward function is also plotted, and we can see that over time, our observed values tend to cluster close to the highest point (ie: the best machine), and the overall fit matching close to the true function.\\
 
 We also compare the cumulative Reward and Regret in the GP method.
 
@@ -363,11 +361,11 @@ We also compare the cumulative Reward and Regret in the GP method.
 \caption{Cumulative Regret and Reward}
 \end{figure}
 
-We can see that in the first 10 iterations, the GP method is exploring high variance areas of our reward function, resulting in a lower reward and higher regret, but after this point, it settles upon the best options. From there, the regret flattens out and the reward increases linearly while exploiting the best machines.
+In the first 10 iterations, the GP method is exploring high variance areas of our reward function, and we can see that this results in a lower reward and higher regret, but after this point, it settles upon the best option. From there, the regret levels out and the reward increases linearly while exploiting the best machines.
 
 \section{Conclusion}
 
-In this paper, we explored discuss the multi-arm bandit problem. The problem essentially entails the exploration vs exploitation tradeoff, where one has to choose between maximizing current expected reward versus maximizing future expected rewards. Such situations arise in various application domains including clinical trials, stochastic scheduling and economics. Assumption that rewards are modeled using a bernoulli distribution, we discuss five strategies -  Exploration, Adbandit, Thompson Sampling, $\epsilon$-greedy and Upper Confidence Bounds that provide approximate solutions to the MAB problem. Using cummulative regret as a performance metric, we compared the algorithims and found the Thompson Sampling seems to perform the best, followed by $\epsilon$-greedy, Adbandit, Upper Confidence Bounds and  Exploration. We also describe a dynamic programming approach that provides a solution in simple cases \big(small trial sizes\big). Assuming the rewards are distributed using a continous Gaussian distribution, we also describe a solution utilizing Gaussian processes. 
+In this paper, we explored the multi-arm bandit problem. The problem essentially entails the exploration vs exploitation tradeoff, where one has to choose between maximizing current expected reward versus maximizing future expected rewards. Such situations arise in various application domains including clinical trials, stochastic scheduling and economics. Assuming that rewards are modeled using a Bernoulli distribution, we discuss five strategies -  Exploration, Adbandit, Thompson Sampling, $\epsilon$-greedy and Upper Confidence Bounds. All methods provide approximate solutions to the MAB problem. Using cumulative regret as a performance metric, we compared the algorithms and found the Thompson Sampling seems to perform the best, followed by $\epsilon$-greedy, Adbandit, Upper Confidence Bounds and  Exploration. We also describe a dynamic programming approach that provides a solution in simple cases \big(small trial sizes\big). Assuming the rewards are distributed using a continuous Gaussian distribution, we also describe a solution utilizing Gaussian processes. 
 
 \section{References}
 
